@@ -75,6 +75,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   StreamSubscription<Position?>? _fakeSub;
   bool _fakeEnabled = false;
   Marker? _fakeMarker;
+  bool _autoFollowFake = true;
+  bool _routeSimListenerSetup = false;
 
   @override
   void initState() {
@@ -100,32 +102,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     // Start warning engine when map is ready
     await _controller.startWarningEngine();
 
-    // Lắng nghe vị trí giả lập (RouteSimulator - Riverpod)
-    ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
-      if (next == null) {
-        if (!FakeLocationService.instance.enabled) {
-          setState(() {
-            _fakeEnabled = false;
-            _fakeMarker = null;
-          });
-        }
-        return;
-      }
-      final pos = Position(
-        latitude: next.latitude,
-        longitude: next.longitude,
-        timestamp: DateTime.now(),
-        accuracy: 5,
-        altitude: 0,
-        heading: 0,
-        speed: 0,
-        speedAccuracy: 0,
-        altitudeAccuracy: 0,
-        headingAccuracy: 0,
-      );
-      _applyPosition(pos, isFake: true);
-    });
-
     // Lắng nghe vị trí giả lập
     _fakeSub = FakeLocationService.instance.stream.listen((pos) {
       if (!mounted) return;
@@ -139,6 +115,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       _applyPosition(pos, isFake: true);
     });
   }
+
 
   Future<void> _initMapService() async {
     try {
@@ -186,6 +163,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   void _applyPosition(Position pos, {required bool isFake}) {
     final next = LatLng(pos.latitude, pos.longitude);
     setState(() {
+      // Nếu vừa chuyển sang fake, bật lại auto-follow để camera bám vị trí giả
+      if (isFake && !_fakeEnabled) {
+        _autoFollowFake = true;
+      }
       _fakeEnabled = isFake;
       _currentLatLng = next;
       _currentSpeedKmh = (pos.speed * 3.6).clamp(0, 300);
@@ -203,8 +184,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     _checkProximity();
     _checkRules();
     _updateCurrentSpeedLimit();
-    if (isFake && _mapReady) {
-      _moveTo(next, zoom: 16);
+    if (isFake && _mapReady && _autoFollowFake) {
+      // Không ép zoom lại, giữ mức zoom hiện tại để tránh cảm giác "nhảy"
+      _moveTo(next);
     }
   }
 
@@ -538,6 +520,57 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Lắng nghe vị trí giả lập (RouteSimulator - Riverpod)
+    // Chỉ listen một lần bằng cách kiểm tra flag
+    if (!_routeSimListenerSetup) {
+      _routeSimListenerSetup = true;
+      ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
+        if (!mounted) return;
+        if (next == null) {
+          if (!FakeLocationService.instance.enabled) {
+            setState(() {
+              _fakeEnabled = false;
+              _fakeMarker = null;
+            });
+          }
+          return;
+        }
+        final pos = Position(
+          latitude: next.latitude,
+          longitude: next.longitude,
+          timestamp: DateTime.now(),
+          accuracy: 5,
+          altitude: 0,
+          heading: 0,
+          speed: 0,
+          speedAccuracy: 0,
+          altitudeAccuracy: 0,
+          headingAccuracy: 0,
+        );
+        _applyPosition(pos, isFake: true);
+      });
+    }
+    
+    // Watch route simulator provider để cập nhật UI khi có thay đổi
+    final routeSimPos = ref.watch(routeSimulatorProvider);
+    if (routeSimPos != null && mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final pos = Position(
+          latitude: routeSimPos.latitude,
+          longitude: routeSimPos.longitude,
+          timestamp: DateTime.now(),
+          accuracy: 5,
+          altitude: 0,
+          heading: 0,
+          speed: 0,
+          speedAccuracy: 0,
+          altitudeAccuracy: 0,
+          headingAccuracy: 0,
+        );
+        _applyPosition(pos, isFake: true);
+      });
+    }
+    
     final markers = <Marker>[];
     if (_currentLatLng != null) {
       markers.add(
@@ -672,6 +705,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         _moveTo(_currentLatLng!);
                       }
                       _log('Map ready');
+                        },
+                        onPositionChanged: (pos, hasGesture) {
+                          if (hasGesture && _autoFollowFake) {
+                            setState(() {
+                              _autoFollowFake = false; // Người dùng kéo map -> dừng auto-follow fake
+                            });
+                          }
                         },
                       ),
                       children: [
