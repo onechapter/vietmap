@@ -7,8 +7,10 @@ plugins {
 
 android {
     namespace = "com.example.vietmap_app"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // Force compileSdk to match plugin requirements (maplibre, etc.)
+    compileSdk = maxOf(flutter.compileSdkVersion, 36)
+    // Use highest requested NDK version among plugins (backward compatible)
+    ndkVersion = "28.1.13356709"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -36,6 +38,14 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+}
+
+// Force older androidx.core to avoid compileSdk 36/AGP 8.9 requirement from core 1.17.0
+configurations.all {
+    resolutionStrategy {
+        force("androidx.core:core:1.12.0")
+        force("androidx.core:core-ktx:1.12.0")
     }
 }
 

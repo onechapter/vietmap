@@ -42,13 +42,13 @@ dependencies:
   sqflite: ^2.3.3+1
   path: ^1.9.0
   vibration: ^1.9.0
-  maplibre_gl: ^0.16.0
+  maplibre_gl: ^0.22.0
   flutter_cache_manager: ^3.3.0
   path_provider: ^2.0.0
   sqflite_common_ffi: ^2.3.0
   shared_preferences: ^2.2.2
   crypto: ^3.0.3
-  connectivity_plus: ^5.0.2
+  connectivity_plus: ^7.0.0
 
 dev_dependencies:
   flutter_test:

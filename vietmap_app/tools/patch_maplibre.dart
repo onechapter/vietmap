@@ -35,13 +35,15 @@ Future<void> main() async {
     pubCache = '$home${Platform.pathSeparator}.pub-cache';
   }
 
+  // Target version from pubspec (currently 0.22.0). Update here if bumped.
+  const targetVersion = '0.22.0';
   final packageDir = Directory(
-      '$pubCache${Platform.pathSeparator}hosted${Platform.pathSeparator}pub.dev${Platform.pathSeparator}maplibre_gl-0.16.0');
+      '$pubCache${Platform.pathSeparator}hosted${Platform.pathSeparator}pub.dev${Platform.pathSeparator}maplibre_gl-$targetVersion');
 
   if (!packageDir.existsSync()) {
-    stderr.writeln(
-        'maplibre_gl-0.16.0 not found in pub cache at: ${packageDir.path}');
-    exit(1);
+    stdout.writeln(
+        'maplibre_gl-$targetVersion not found in pub cache at: ${packageDir.path} (skip patch)');
+    return;
   }
 
   final buildGradle =
