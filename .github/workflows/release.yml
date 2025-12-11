@@ -28,10 +28,6 @@ jobs:
         working-directory: ./vietmap_app
         run: flutter pub get
 
-      - name: Apply Flutter patches
-        working-directory: ./vietmap_app
-        run: flutter pub run flutter_patch
-
       - name: Run tests
         working-directory: ./vietmap_app
         run: flutter test
