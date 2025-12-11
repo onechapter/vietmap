@@ -69,7 +69,7 @@ class ManeuverBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 8,
-      color: Colors.white.withOpacity(0.95),
+      color: Colors.white.withValues(alpha: 0.95),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -77,7 +77,7 @@ class ManeuverBanner extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _getManeuverColor().withOpacity(0.1),
+                color: _getManeuverColor().withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(

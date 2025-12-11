@@ -197,6 +197,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
       }
 
       if (from == null || to == null) {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Invalid coordinates')),
         );
@@ -207,11 +208,13 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
       if (route != null) {
         setState(() => _currentRoute = route);
       } else {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to load route')),
         );
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );

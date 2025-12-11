@@ -526,7 +526,7 @@ class _MapScreenState extends State<MapScreen> {
         polygons.add(
           Polygon(
             points: rule.polygon,
-            color: dangerColor.withOpacity(dangerOpacity),
+            color: dangerColor.withValues(alpha: dangerOpacity),
             borderStrokeWidth: dangerStrokeWidth,
             borderColor: dangerStrokeColor,
           ),
@@ -545,7 +545,7 @@ class _MapScreenState extends State<MapScreen> {
         polygons.add(
           Polygon(
             points: circle,
-            color: dangerColor.withOpacity(dangerOpacity),
+            color: dangerColor.withValues(alpha: dangerOpacity),
             borderStrokeWidth: dangerStrokeWidth,
             borderColor: dangerStrokeColor,
           ),

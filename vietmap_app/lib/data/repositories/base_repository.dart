@@ -127,7 +127,7 @@ abstract class BaseRepository<T> {
     // Round to 0.01 degree (~1km) for cache key
     final gridLat = (lat * 100).floor();
     final gridLng = (lng * 100).floor();
-    return '${gridLat}_${gridLng}';
+    return '${gridLat}_$gridLng';
   }
 
   /// Get item by ID
