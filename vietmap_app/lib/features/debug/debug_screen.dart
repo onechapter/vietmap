@@ -46,6 +46,8 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
   final TextEditingController _simEndLat = TextEditingController(text: '11.500000');
   final TextEditingController _simEndLng = TextEditingController(text: '106.620000');
   double _simSpeed = 40;
+  bool _routeLoading = false;
+  String? _routeError;
 
   @override
   void initState() {
@@ -320,20 +322,61 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
               onChanged: (v) => setState(() => _simSpeed = v),
             ),
             const SizedBox(height: 12),
+            if (_routeLoading)
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+                    SizedBox(width: 8),
+                    Text('Đang lấy route từ API...'),
+                  ],
+                ),
+              )
+            else if (_routeError != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _routeError!,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      final start = LatLng(
-                        double.tryParse(_simStartLat.text) ?? 0,
-                        double.tryParse(_simStartLng.text) ?? 0,
-                      );
-                      final end = LatLng(
-                        double.tryParse(_simEndLat.text) ?? 0,
-                        double.tryParse(_simEndLng.text) ?? 0,
-                      );
-                      sim.start(start: start, end: end, speedKmH: _simSpeed);
+                    onPressed: _routeLoading || running ? null : () async {
+                      setState(() {
+                        _routeLoading = true;
+                        _routeError = null;
+                      });
+                      try {
+                        final start = LatLng(
+                          double.tryParse(_simStartLat.text) ?? 0,
+                          double.tryParse(_simStartLng.text) ?? 0,
+                        );
+                        final end = LatLng(
+                          double.tryParse(_simEndLat.text) ?? 0,
+                          double.tryParse(_simEndLng.text) ?? 0,
+                        );
+                        await sim.start(start: start, end: end, speedKmH: _simSpeed);
+                        if (sim.error != null) {
+                          setState(() {
+                            _routeError = sim.error;
+                            _routeLoading = false;
+                          });
+                        } else {
+                          setState(() {
+                            _routeLoading = false;
+                            _routeError = null;
+                          });
+                        }
+                      } catch (e) {
+                        setState(() {
+                          _routeError = 'Lỗi: $e';
+                          _routeLoading = false;
+                        });
+                      }
                     },
                     child: const Text('Bắt đầu mô phỏng'),
                   ),
@@ -341,17 +384,23 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => sim.stop(),
+                    onPressed: running ? () => sim.stop() : null,
                     child: const Text('Dừng'),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            Text(
-              running ? 'Đang mô phỏng' : 'Đã dừng',
-              style: TextStyle(color: running ? Colors.green : Colors.grey),
-            ),
+            if (running)
+              Text(
+                'Đang mô phỏng: điểm ${sim.currentPointIndex + 1}/${sim.routePointCount}',
+                style: const TextStyle(color: Colors.green),
+              )
+            else
+              const Text(
+                'Đã dừng',
+                style: TextStyle(color: Colors.grey),
+              ),
           ],
         ),
       ),
