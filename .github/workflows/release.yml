@@ -28,6 +28,10 @@ jobs:
         working-directory: ./vietmap_app
         run: flutter pub get
 
+      - name: Patch maplibre namespace
+        working-directory: ./vietmap_app
+        run: dart run tools/patch_maplibre.dart
+
       - name: Run tests
         working-directory: ./vietmap_app
         run: flutter test
