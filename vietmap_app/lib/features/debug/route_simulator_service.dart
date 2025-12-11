@@ -108,6 +108,11 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
         remainingDistance = 0;
       }
     }
+    
+    // Log debug để đảm bảo state thay đổi mỗi giây
+    if (state != null) {
+      appLog('SIM POS: $state');
+    }
   }
 
   void stop() {
@@ -123,5 +128,6 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
   String? get error => _error;
   int get routePointCount => _routePoints?.length ?? 0;
   int get currentPointIndex => _currentPointIndex;
+  double get speedKmh => _speed;
 }
 

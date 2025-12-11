@@ -112,6 +112,31 @@ class WarningEngine {
     await _checkSpeedLimits(lat, lng, filteredSpeed);
   }
 
+  /// Evaluate location directly (for Route Simulator)
+  Future<void> evaluate(LatLng location, {double speedKmh = 0.0}) async {
+    if (!_running) return;
+
+    appLog('Warning evaluated at $location');
+    
+    final lat = location.latitude;
+    final lng = location.longitude;
+    final filteredSpeed = speedKmh > 0 ? _smoother.update(speedKmh) : 0.0;
+
+    // Check cameras
+    await _checkCameras(lat, lng);
+
+    // Check railway
+    await _checkRailway(lat, lng);
+
+    // Check danger zones
+    await _checkDangerZones(lat, lng);
+
+    // Check speed limits (only if speed > 0)
+    if (filteredSpeed > 0) {
+      await _checkSpeedLimits(lat, lng, filteredSpeed);
+    }
+  }
+
   Future<void> _checkCameras(double lat, double lng) async {
     final repo = CameraRepository.instance;
     final nearby = repo.queryNearby(lat, lng, cameraRadiusM);

@@ -25,7 +25,9 @@ import '../debug/debug_screen.dart';
 import '../debug/fake_location_service.dart';
 import '../debug/route_simulator_service.dart';
 import '../../features/warning/warning_model.dart';
+import '../../features/warning/warning_engine_provider.dart';
 import '../../config/map_layers_loader.dart';
+import '../../core/location/location_providers.dart';
 import 'map_service.dart';
 import 'map_screen_controller.dart';
 
@@ -529,26 +531,24 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Lắng nghe vị trí giả lập (RouteSimulator - Riverpod)
-    // Chỉ listen một lần bằng cách kiểm tra flag
+    // Lấy vị trí từ provider (ưu tiên Route Simulator, fallback GPS thật)
+    final currentLocation = ref.watch(currentLocationProvider);
+    
+    // Listener để cập nhật UI và WarningEngine khi location thay đổi
     if (!_routeSimListenerSetup) {
       _routeSimListenerSetup = true;
-      ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
-        if (!mounted) return;
-        if (next == null) {
-          if (!FakeLocationService.instance.enabled) {
-            setState(() {
-              _fakeEnabled = false;
-              _fakeMarker = null;
-            });
-          }
-          return;
-        }
+      ref.listen<LatLng?>(currentLocationProvider, (prev, next) {
+        if (!mounted || next == null) return;
+        
+        final isFromSimulator = ref.read(routeSimulatorProvider) != null;
+        appLog('SIM POS: $next (from simulator: $isFromSimulator)');
+        
+        // Cập nhật UI
         final pos = Position(
           latitude: next.latitude,
           longitude: next.longitude,
           timestamp: DateTime.now(),
-          accuracy: 5,
+          accuracy: isFromSimulator ? 5 : 10,
           altitude: 0,
           heading: 0,
           speed: 0,
@@ -556,19 +556,27 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           altitudeAccuracy: 0,
           headingAccuracy: 0,
         );
-        _applyPosition(pos, isFake: true);
+        _applyPosition(pos, isFake: isFromSimulator);
+        
+        // Evaluate WarningEngine với location mới
+        final warningEngine = ref.read(warningEngineProvider);
+        final simService = ref.read(routeSimulatorProvider.notifier);
+        // Lấy tốc độ từ simulator nếu đang chạy, mặc định 0
+        final speedKmh = isFromSimulator && simService.running ? simService.speedKmh : 0.0;
+        warningEngine.evaluate(next, speedKmh: speedKmh);
+        appLog('Warning evaluated at $next');
       });
     }
     
-    // Watch route simulator provider để cập nhật UI khi có thay đổi
-    final routeSimPos = ref.watch(routeSimulatorProvider);
-    if (routeSimPos != null && mounted) {
+    // Cập nhật UI khi location thay đổi
+    if (currentLocation != null && mounted) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        final isFromSimulator = ref.read(routeSimulatorProvider) != null;
         final pos = Position(
-          latitude: routeSimPos.latitude,
-          longitude: routeSimPos.longitude,
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
           timestamp: DateTime.now(),
-          accuracy: 5,
+          accuracy: isFromSimulator ? 5 : 10,
           altitude: 0,
           heading: 0,
           speed: 0,
@@ -576,7 +584,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           altitudeAccuracy: 0,
           headingAccuracy: 0,
         );
-        _applyPosition(pos, isFake: true);
+        _applyPosition(pos, isFake: isFromSimulator);
       });
     }
     
