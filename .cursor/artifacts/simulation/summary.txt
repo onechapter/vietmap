@@ -1,0 +1,6 @@
+Simulation Mode added
+- Files: features/simulation/{simulation_screen.dart,simulation_controller.dart,navigation_simulator.dart,simulation_route_mock.dart,ghost_car_renderer.dart,widgets/simulation_panel.dart}
+- Route registered: main.dart -> '/simulation'
+- Tests: not run (manual)
+- Manual steps suggested: flutter run, open /simulation, tap start/end, start/pause/stop, adjust speed/follow/loop, observe warnings HUD
+
