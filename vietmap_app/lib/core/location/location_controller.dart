@@ -1,15 +1,41 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import 'package:rxdart/rxdart.dart';
 import '../logger.dart';
+
+/// Location data model
+class LocationData {
+  final double lat;
+  final double lng;
+  final double speed; // km/h
+
+  LocationData(this.lat, this.lng, this.speed);
+
+  Position toPosition() {
+    return Position(
+      latitude: lat,
+      longitude: lng,
+      timestamp: DateTime.now(),
+      accuracy: 5,
+      altitude: 0,
+      heading: 0,
+      speed: speed / 3.6, // m/s
+      speedAccuracy: 0,
+      altitudeAccuracy: 0,
+      headingAccuracy: 0,
+    );
+  }
+}
 
 /// Unified location controller - single source of truth for all location updates
 /// Supports both real GPS and fake/simulated locations
+/// Uses BehaviorSubject for smooth updates
 class LocationController {
   static LocationController? _instance;
-  final _streamController = StreamController<Position>.broadcast();
+  final BehaviorSubject<LocationData> _stream = BehaviorSubject<LocationData>();
   StreamSubscription<Position>? _realGpsSubscription;
   bool _simulationMode = false;
-  Position? _lastPosition;
+  LocationData? _lastLocation;
 
   LocationController._();
 
@@ -19,10 +45,16 @@ class LocationController {
   }
 
   /// Stream of location updates (unified for real GPS and fake/simulated)
-  Stream<Position> get stream => _streamController.stream;
+  Stream<LocationData> get stream => _stream.stream;
+
+  /// Stream as Position (for backward compatibility)
+  Stream<Position> get positionStream => _stream.stream.map((loc) => loc.toPosition());
 
   /// Current location
-  Position? get currentLocation => _lastPosition;
+  LocationData? get currentLocation => _lastLocation;
+
+  /// Current location as Position (for backward compatibility)
+  Position? get currentPosition => _lastLocation?.toPosition();
 
   /// Check if simulation mode is active
   bool get isSimulationMode => _simulationMode;
@@ -68,7 +100,12 @@ class LocationController {
           .listen(
         (position) {
           if (!_simulationMode) {
-            _emitPosition(position);
+            final loc = LocationData(
+              position.latitude,
+              position.longitude,
+              position.speed * 3.6, // km/h
+            );
+            _emitLocation(loc);
           }
         },
         onError: (e) {
@@ -107,36 +144,26 @@ class LocationController {
   void updateLocation({
     required double latitude,
     required double longitude,
-    double speed = 0.0,
+    double speed = 0.0, // m/s
     double accuracy = 5.0,
   }) {
-    final position = Position(
-      latitude: latitude,
-      longitude: longitude,
-      timestamp: DateTime.now(),
-      accuracy: accuracy,
-      altitude: 0,
-      heading: 0,
-      speed: speed,
-      speedAccuracy: 0,
-      altitudeAccuracy: 0,
-      headingAccuracy: 0,
-    );
-
-    appLog('FAKE LOC → $latitude, $longitude, speed=${speed.toStringAsFixed(1)} km/h');
-    _emitPosition(position);
+    final speedKmh = speed * 3.6; // Convert to km/h
+    final loc = LocationData(latitude, longitude, speedKmh);
+    
+    appLog('[FAKE-LOC] $latitude,$longitude | speed=$speedKmh');
+    _emitLocation(loc);
   }
 
-  /// Emit position to stream
-  void _emitPosition(Position position) {
-    _lastPosition = position;
-    _streamController.add(position);
+  /// Emit location to stream
+  void _emitLocation(LocationData location) {
+    _lastLocation = location;
+    _stream.add(location);
   }
 
   /// Dispose controller
   void dispose() {
     stopRealGps();
-    _streamController.close();
+    _stream.close();
     appLog('LocationController: Disposed');
   }
 }

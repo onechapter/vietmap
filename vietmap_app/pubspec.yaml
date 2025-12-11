@@ -50,6 +50,7 @@ dependencies:
   crypto: ^3.0.3
   connectivity_plus: ^7.0.0
   flutter_riverpod: ^2.5.1
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

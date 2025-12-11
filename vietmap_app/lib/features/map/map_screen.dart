@@ -210,8 +210,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       // Start unified LocationController (will start real GPS if not in simulation mode)
       await LocationController.instance.startRealGps();
       
-      // Listen to unified stream
-      _positionSub = LocationController.instance.stream.listen(
+      // Listen to unified positionStream (converts LocationData to Position)
+      _positionSub = LocationController.instance.positionStream.listen(
         (Position pos) {
           if (!mounted) return;
           final isFromSimulator = LocationController.instance.isSimulationMode;
@@ -224,7 +224,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       );
 
       // Get initial position
-      final current = LocationController.instance.currentLocation;
+      final current = LocationController.instance.currentPosition;
       if (current != null) {
         final initialLatLng = LatLng(current.latitude, current.longitude);
         setState(() {
@@ -500,43 +500,47 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Lấy vị trí hiện tại từ LocationController
-    final currentPos = LocationController.instance.currentLocation;
-    final displayLocation = currentPos != null 
-        ? LatLng(currentPos.latitude, currentPos.longitude)
-        : _currentLatLng;
-    
-    // Auto-zoom khi simulator bắt đầu
-    if (!_routeSimListenerSetup) {
-      _routeSimListenerSetup = true;
-      ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
-        if (!mounted) return;
-        if (next != null && prev == null) {
-          // Simulator vừa bắt đầu
-          _moveTo(next, zoom: 16.0);
-          _autoFollowFake = true;
-          appLog('MapScreen: Auto-zoomed to simulator start position');
+    // StreamBuilder để hiển thị vị trí mượt mà từ LocationController
+    return StreamBuilder<LocationData>(
+      stream: LocationController.instance.stream,
+      builder: (context, snapshot) {
+        LatLng? displayLocation;
+        if (snapshot.hasData) {
+          final loc = snapshot.data!;
+          displayLocation = LatLng(loc.lat, loc.lng);
+          
+          // Auto-zoom khi có location mới và đang ở simulation mode
+          if (LocationController.instance.isSimulationMode && _autoFollowFake) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) {
+                _moveTo(displayLocation!, zoom: 16.0);
+              }
+            });
+          }
+        } else {
+          displayLocation = _currentLatLng;
         }
-      });
-    }
-    if (displayLocation != null && mounted) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final isFromSimulator = ref.read(routeSimulatorProvider) != null;
-        final pos = Position(
-          latitude: displayLocation.latitude,
-          longitude: displayLocation.longitude,
-          timestamp: DateTime.now(),
-          accuracy: isFromSimulator ? 5 : 10,
-          altitude: 0,
-          heading: 0,
-          speed: 0,
-          speedAccuracy: 0,
-          altitudeAccuracy: 0,
-          headingAccuracy: 0,
-        );
-        _applyPosition(pos, isFake: isFromSimulator);
-      });
-    }
+        
+        // Auto-zoom khi simulator bắt đầu
+        if (!_routeSimListenerSetup) {
+          _routeSimListenerSetup = true;
+          ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
+            if (!mounted) return;
+            if (next != null && prev == null) {
+              // Simulator vừa bắt đầu
+              _moveTo(next, zoom: 16.0);
+              _autoFollowFake = true;
+              appLog('MapScreen: Auto-zoomed to simulator start position');
+            }
+          });
+        }
+        
+        return _buildMapContent(displayLocation);
+      },
+    );
+  }
+
+  Widget _buildMapContent(LatLng? displayLocation) {
     
     final markers = <Marker>[];
     if (displayLocation != null) {

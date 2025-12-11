@@ -54,8 +54,8 @@ class WarningEngine {
       appLog('WarningEngine: Adaptive frequency active');
     }
 
-    // Use unified LocationController stream instead of provided stream
-    _positionSub = LocationController.instance.stream.listen(
+    // Use unified LocationController positionStream (converts LocationData to Position)
+    _positionSub = LocationController.instance.positionStream.listen(
       (position) {
         appLog('WarningEngine: Received location: ${position.latitude}, ${position.longitude}, speed=${(position.speed * 3.6).toStringAsFixed(1)} km/h');
         _processLocation(position);
@@ -65,7 +65,7 @@ class WarningEngine {
       },
     );
     
-    appLog('WarningEngine: Listening to unified LocationController stream');
+    appLog('WarningEngine: Listening to unified LocationController positionStream');
   }
 
   void stop() {

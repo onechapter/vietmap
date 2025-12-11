@@ -79,8 +79,8 @@ class MapScreenController {
     try {
       appLog('MapScreenController: Starting warning engine...');
 
-      // Start engine with unified LocationController stream
-      await _warningEngine.start(LocationController.instance.stream);
+      // Start engine with unified LocationController positionStream (converts LocationData to Position)
+      await _warningEngine.start(LocationController.instance.positionStream);
 
       _isEngineRunning = true;
       appLog('MapScreenController: Warning engine started (using unified LocationController stream)');
