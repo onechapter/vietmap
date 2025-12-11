@@ -500,6 +500,20 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Setup route simulator listener (chỉ một lần)
+    if (!_routeSimListenerSetup) {
+      _routeSimListenerSetup = true;
+      ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
+        if (!mounted) return;
+        if (next != null && prev == null) {
+          // Simulator vừa bắt đầu
+          _moveTo(next, zoom: 16.0);
+          _autoFollowFake = true;
+          appLog('MapScreen: Auto-zoomed to simulator start position');
+        }
+      });
+    }
+    
     // StreamBuilder để hiển thị vị trí mượt mà từ LocationController
     return StreamBuilder<LocationData>(
       stream: LocationController.instance.stream,
@@ -519,20 +533,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           }
         } else {
           displayLocation = _currentLatLng;
-        }
-        
-        // Auto-zoom khi simulator bắt đầu
-        if (!_routeSimListenerSetup) {
-          _routeSimListenerSetup = true;
-          ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
-            if (!mounted) return;
-            if (next != null && prev == null) {
-              // Simulator vừa bắt đầu
-              _moveTo(next, zoom: 16.0);
-              _autoFollowFake = true;
-              appLog('MapScreen: Auto-zoomed to simulator start position');
-            }
-          });
         }
         
         return _buildMapContent(displayLocation);
