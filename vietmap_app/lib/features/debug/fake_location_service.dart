@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import '../../core/logger.dart';
+import '../../core/location/location_controller.dart';
 
 /// Fake location service cho debug/simulator
 class FakeLocationService {
@@ -18,6 +19,8 @@ class FakeLocationService {
   /// Bật giả lập tại vị trí mặc định (Có thể mở rộng nhận tham số)
   void enableFake({double lat = 11.488688, double lng = 106.614503}) {
     enabled = true;
+    // Enable simulation mode (disables real GPS)
+    LocationController.instance.enableSimulationMode();
     _emit(lat, lng);
     // Lặp lại mỗi 1s để giữ dòng vị trí ổn định
     _timer?.cancel();
@@ -31,7 +34,9 @@ class FakeLocationService {
     _timer = null;
     _current = null;
     _controller.add(null);
-    appLog('FakeLocationService: Disabled');
+    // Disable simulation mode (re-enable real GPS)
+    LocationController.instance.disableSimulationMode();
+    appLog('FakeLocationService: Disabled, real GPS re-enabled');
   }
 
   void _emit(double lat, double lng) {
@@ -49,6 +54,13 @@ class FakeLocationService {
     );
     _current = position;
     _controller.add(position);
+    
+    // Emit vào unified LocationController
+    LocationController.instance.updateLocation(
+      latitude: lat,
+      longitude: lng,
+      speed: 0.0,
+    );
   }
 
   /// API cũ: mô phỏng một vị trí tùy ý (sử dụng ngay lập tức, không bật flag)

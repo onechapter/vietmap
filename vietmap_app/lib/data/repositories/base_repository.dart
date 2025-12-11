@@ -31,29 +31,44 @@ abstract class BaseRepository<T> {
 
   /// Load data from asset file
   Future<void> load() async {
-    if (_loaded) return;
+    if (_loaded) {
+      appLog('BaseRepository: $assetPath already loaded (${_itemsById.length} items)');
+      return;
+    }
 
     try {
-      appLog('Loading $assetPath...');
+      appLog('BaseRepository: Loading $assetPath...');
       final String jsonString = await rootBundle.loadString(assetPath);
+      appLog('BaseRepository: JSON string loaded (${jsonString.length} chars)');
+      
       final List<dynamic> jsonList = jsonDecode(jsonString);
+      appLog('BaseRepository: JSON decoded (${jsonList.length} items)');
 
       _itemsById.clear();
       _gridIndex.clear();
 
+      int parsedCount = 0;
+      int errorCount = 0;
       for (final json in jsonList) {
-        final item = parseItem(json as Map<String, dynamic>);
-        final id = getId(item);
-        _itemsById[id] = item;
+        try {
+          final item = parseItem(json as Map<String, dynamic>);
+          final id = getId(item);
+          _itemsById[id] = item;
 
-        final (lat, lng) = getLocation(item);
-        _gridIndex.add(lat, lng, item);
+          final (lat, lng) = getLocation(item);
+          _gridIndex.add(lat, lng, item);
+          parsedCount++;
+        } catch (e) {
+          errorCount++;
+          appLog('BaseRepository: Error parsing item $errorCount: $e');
+        }
       }
 
       _loaded = true;
-      appLog('Loaded ${_itemsById.length} items from $assetPath');
-    } catch (e) {
-      appLog('Error loading $assetPath: $e');
+      appLog('BaseRepository: Loaded $parsedCount items from $assetPath (errors: $errorCount)');
+    } catch (e, stackTrace) {
+      appLog('BaseRepository: Error loading $assetPath: $e');
+      appLog('BaseRepository: Stack trace: $stackTrace');
       _loaded = true; // Mark as loaded to prevent infinite retries
     }
   }

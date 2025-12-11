@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import '../../core/logger.dart';
 import '../../core/speed_smoother.dart';
 import '../../core/engine/engine_config.dart';
+import '../../core/location/location_controller.dart';
 import '../../data/repositories/danger_zone_repository.dart';
 import '../../data/repositories/railway_repository.dart';
 import '../../data/repositories/camera_repository.dart';
@@ -53,12 +54,18 @@ class WarningEngine {
       appLog('WarningEngine: Adaptive frequency active');
     }
 
-    _positionSub = locationStream.listen(
-      (position) => _processLocation(position),
+    // Use unified LocationController stream instead of provided stream
+    _positionSub = LocationController.instance.stream.listen(
+      (position) {
+        appLog('WarningEngine: Received location: ${position.latitude}, ${position.longitude}, speed=${(position.speed * 3.6).toStringAsFixed(1)} km/h');
+        _processLocation(position);
+      },
       onError: (e) {
         appLog('WarningEngine: Location stream error: $e');
       },
     );
+    
+    appLog('WarningEngine: Listening to unified LocationController stream');
   }
 
   void stop() {
@@ -98,6 +105,14 @@ class WarningEngine {
     final speedMs = position.speed;
     final speedKmh = (speedMs * 3.6).clamp(0.0, 300.0);
     final filteredSpeed = _smoother.update(speedKmh);
+
+    appLog('WarningEngine: Processing location: $lat, $lng, speed=${speedKmh.toStringAsFixed(1)} km/h');
+
+    // Reset cooldown in simulation mode
+    if (LocationController.instance.isSimulationMode) {
+      await _cooldownDb.clear();
+      appLog('WarningEngine: Cooldown cleared (simulation mode)');
+    }
 
     // Check cameras
     await _checkCameras(lat, lng);
@@ -140,6 +155,7 @@ class WarningEngine {
   Future<void> _checkCameras(double lat, double lng) async {
     final repo = CameraRepository.instance;
     final nearby = repo.queryNearby(lat, lng, cameraRadiusM);
+    appLog('WarningEngine: Checking cameras - found ${nearby.length} nearby');
 
     for (final camera in nearby) {
       final dist = _distance.as(
@@ -174,6 +190,7 @@ class WarningEngine {
   Future<void> _checkRailway(double lat, double lng) async {
     final repo = RailwayRepository.instance;
     final nearby = repo.queryNearby(lat, lng, railwayRadiusM);
+    appLog('WarningEngine: Checking railway - found ${nearby.length} nearby');
 
     for (final railway in nearby) {
       final dist = _distance.as(
@@ -208,6 +225,7 @@ class WarningEngine {
   Future<void> _checkDangerZones(double lat, double lng) async {
     final repo = DangerZoneRepository.instance;
     final nearby = repo.queryNearby(lat, lng, dangerZoneRadiusM * 2); // Query wider area
+    appLog('WarningEngine: Checking danger zones - found ${nearby.length} nearby');
 
     for (final zone in nearby) {
       final dist = _distance.as(
@@ -243,6 +261,7 @@ class WarningEngine {
   Future<void> _checkSpeedLimits(double lat, double lng, double currentSpeedKmh) async {
     final repo = SpeedLimitRepository.instance;
     final nearby = repo.queryNearby(lat, lng, speedCheckRadiusM);
+    appLog('WarningEngine: Checking speed limits - found ${nearby.length} nearby, current speed=${currentSpeedKmh.toStringAsFixed(1)} km/h');
 
     for (final limit in nearby) {
       if (currentSpeedKmh > limit.speedLimit + 5) {

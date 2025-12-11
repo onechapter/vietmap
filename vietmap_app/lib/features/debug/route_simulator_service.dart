@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import '../../core/logger.dart';
+import '../../core/location/location_controller.dart';
 import '../../features/navigation/route_engine.dart';
 import '../../features/navigation/models/route_model.dart';
 
@@ -32,6 +33,9 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     _speed = speedKmH;
     _error = null;
 
+    // Enable simulation mode (disables real GPS)
+    LocationController.instance.enableSimulationMode();
+
     // Lấy route thực tế từ RouteEngine
     appLog('RouteSimulator: Requesting route from ${start.latitude},${start.longitude} to ${end.latitude},${end.longitude}');
     RouteModel? route = await RouteEngine.instance.requestRoute(
@@ -53,6 +57,13 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     _currentPointIndex = 0;
     state = _routePoints!.first;
     running = true;
+
+    // Emit initial position
+    LocationController.instance.updateLocation(
+      latitude: _routePoints!.first.latitude,
+      longitude: _routePoints!.first.longitude,
+      speed: _speed / 3.6, // m/s
+    );
 
     // Tick mỗi giây
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
@@ -81,6 +92,11 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     if (_currentPointIndex >= _routePoints!.length - 1) {
       // Đã đến điểm cuối
       state = _routePoints!.last;
+      LocationController.instance.updateLocation(
+        latitude: _routePoints!.last.latitude,
+        longitude: _routePoints!.last.longitude,
+        speed: _speed / 3.6, // m/s
+      );
       stop();
       appLog('RouteSimulator: Reached destination');
       return;
@@ -90,6 +106,7 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     var remainingDistance = meterPerSecond;
 
     // Di chuyển theo route points
+    LatLng? newPosition;
     while (remainingDistance > 0 && _currentPointIndex < _routePoints!.length - 1) {
       final currentPoint = _routePoints![_currentPointIndex];
       final nextPoint = _routePoints![_currentPointIndex + 1];
@@ -99,19 +116,25 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
         // Đã đi hết segment này, chuyển sang điểm tiếp theo
         _currentPointIndex++;
         remainingDistance -= segmentDistance;
+        newPosition = nextPoint;
         state = nextPoint;
       } else {
         // Đi một phần segment này
         final bearing = _distance.bearing(currentPoint, nextPoint);
-        final newPoint = _distance.offset(currentPoint, remainingDistance, bearing);
-        state = newPoint;
+        newPosition = _distance.offset(currentPoint, remainingDistance, bearing);
+        state = newPosition;
         remainingDistance = 0;
       }
     }
     
-    // Log debug để đảm bảo state thay đổi mỗi giây
-    if (state != null) {
-      appLog('SIM POS: $state');
+    // Emit position vào unified stream
+    if (newPosition != null) {
+      LocationController.instance.updateLocation(
+        latitude: newPosition.latitude,
+        longitude: newPosition.longitude,
+        speed: _speed / 3.6, // m/s
+      );
+      appLog('SIM POS: $newPosition, speed=${_speed.toStringAsFixed(1)} km/h');
     }
   }
 
@@ -123,6 +146,10 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     _currentPointIndex = 0;
     state = null;
     _error = null;
+    
+    // Disable simulation mode (re-enable real GPS)
+    LocationController.instance.disableSimulationMode();
+    appLog('RouteSimulator: Stopped, real GPS re-enabled');
   }
 
   String? get error => _error;

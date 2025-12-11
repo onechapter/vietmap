@@ -10,7 +10,6 @@ import 'package:vibration/vibration.dart';
 import 'dart:math' show cos, sin;
 
 import '../../core/logger.dart';
-import '../../core/retry.dart';
 import '../../core/grid_index.dart';
 import '../../core/speed_smoother.dart';
 import '../../data/cameras/camera_model.dart';
@@ -25,9 +24,8 @@ import '../debug/debug_screen.dart';
 import '../debug/fake_location_service.dart';
 import '../debug/route_simulator_service.dart';
 import '../../features/warning/warning_model.dart';
-import '../../features/warning/warning_engine_provider.dart';
 import '../../config/map_layers_loader.dart';
-import '../../core/location/location_providers.dart';
+import '../../core/location/location_controller.dart';
 import 'map_service.dart';
 import 'map_screen_controller.dart';
 
@@ -206,69 +204,40 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   }
 
   Future<void> _initLocationTracking() async {
-    final backoff = ExponentialBackoff(maxAttempts: 5);
     try {
       _log('Init location tracking');
-      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        setState(() {
-          _error = 'Vui lòng bật dịch vụ vị trí (GPS).';
-          _loading = false;
-        });
-        _log('Location service disabled');
-        return;
-      }
-
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-      }
-
-      if (permission == LocationPermission.denied) {
-        setState(() {
-          _error = 'Ứng dụng cần quyền truy cập vị trí.';
-          _loading = false;
-        });
-        _log('Permission denied');
-        return;
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        setState(() {
-          _error = 'Quyền vị trí bị từ chối vĩnh viễn. Hãy bật trong cài đặt.';
-          _loading = false;
-        });
-        _log('Permission denied forever');
-        return;
-      }
-
-      final current = await backoff.run(() => Geolocator.getCurrentPosition());
-      final initialLatLng = LatLng(current.latitude, current.longitude);
-      setState(() {
-        _currentLatLng = initialLatLng;
-        _loading = false;
-      });
-      _log('Got initial position: $initialLatLng');
-      _moveTo(initialLatLng);
-
-      final locationSettings = const LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
-      );
-
-      _positionSub = Geolocator.getPositionStream(locationSettings: locationSettings)
-          .listen(
+      
+      // Start unified LocationController (will start real GPS if not in simulation mode)
+      await LocationController.instance.startRealGps();
+      
+      // Listen to unified stream
+      _positionSub = LocationController.instance.stream.listen(
         (Position pos) {
-          if (_fakeEnabled) return; // đang giả lập thì bỏ GPS thật
-          _applyPosition(pos, isFake: false);
+          if (!mounted) return;
+          final isFromSimulator = LocationController.instance.isSimulationMode;
+          _log('Location update: ${pos.latitude}, ${pos.longitude}, speed=${(pos.speed * 3.6).toStringAsFixed(1)} km/h (sim: $isFromSimulator)');
+          _applyPosition(pos, isFake: isFromSimulator);
         },
-        onError: (e) async {
-          _log('Position stream error: $e');
-          await Future.delayed(const Duration(seconds: 1));
-          _positionSub?.cancel();
-          await _initLocationTracking();
+        onError: (e) {
+          _log('Location stream error: $e');
         },
       );
+
+      // Get initial position
+      final current = LocationController.instance.currentLocation;
+      if (current != null) {
+        final initialLatLng = LatLng(current.latitude, current.longitude);
+        setState(() {
+          _currentLatLng = initialLatLng;
+          _loading = false;
+        });
+        _log('Got initial position: $initialLatLng');
+        _moveTo(initialLatLng);
+      } else {
+        setState(() {
+          _loading = false;
+        });
+      }
     } catch (e) {
       setState(() {
         _error = 'Không lấy được vị trí: $e';
@@ -531,60 +500,25 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Lấy vị trí từ provider (ưu tiên Route Simulator, fallback GPS thật)
-    final currentLocation = ref.watch(currentLocationProvider);
+    // Lấy vị trí hiện tại từ LocationController
+    final currentPos = LocationController.instance.currentLocation;
+    final displayLocation = currentPos != null 
+        ? LatLng(currentPos.latitude, currentPos.longitude)
+        : _currentLatLng;
     
-    // Listener để cập nhật UI và WarningEngine khi location thay đổi
+    // Auto-zoom khi simulator bắt đầu
     if (!_routeSimListenerSetup) {
       _routeSimListenerSetup = true;
-      ref.listen<LatLng?>(currentLocationProvider, (prev, next) {
-        if (!mounted || next == null) return;
-        
-        final simService = ref.read(routeSimulatorProvider.notifier);
-        final isFromSimulator = ref.read(routeSimulatorProvider) != null;
-        appLog('SIM POS: $next (from simulator: $isFromSimulator)');
-        
-        // Cập nhật _currentLatLng để các method khác dùng
-        setState(() {
-          _currentLatLng = next;
-        });
-        
-        // Auto-zoom khi simulator bắt đầu (lần đầu tiên có location từ simulator)
-        if (isFromSimulator && (prev == null || prev != next)) {
+      ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
+        if (!mounted) return;
+        if (next != null && prev == null) {
+          // Simulator vừa bắt đầu
           _moveTo(next, zoom: 16.0);
-          _autoFollowFake = true; // Bật auto-follow khi simulator chạy
+          _autoFollowFake = true;
+          appLog('MapScreen: Auto-zoomed to simulator start position');
         }
-        
-        // Lấy tốc độ từ simulator nếu đang chạy, mặc định 0
-        final speedKmh = isFromSimulator && simService.running ? simService.speedKmh : 0.0;
-        
-        // Cập nhật UI
-        final pos = Position(
-          latitude: next.latitude,
-          longitude: next.longitude,
-          timestamp: DateTime.now(),
-          accuracy: isFromSimulator ? 5 : 10,
-          altitude: 0,
-          heading: 0,
-          speed: speedKmh / 3.6, // m/s
-          speedAccuracy: 0,
-          altitudeAccuracy: 0,
-          headingAccuracy: 0,
-        );
-        _applyPosition(pos, isFake: isFromSimulator);
-        
-        // Emit position vào WarningEngine stream
-        _controller.emitPosition(pos);
-        
-        // Evaluate WarningEngine với location mới (backup method)
-        final warningEngine = ref.read(warningEngineProvider);
-        warningEngine.evaluate(next, speedKmh: speedKmh);
-        appLog('Warning evaluated at $next');
       });
     }
-    
-    // Cập nhật UI khi location thay đổi từ provider
-    final displayLocation = currentLocation ?? _currentLatLng;
     if (displayLocation != null && mounted) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final isFromSimulator = ref.read(routeSimulatorProvider) != null;

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:geolocator/geolocator.dart';
 import '../../features/warning/warning_engine.dart';
 import '../../features/warning/warning_manager.dart';
 import '../../features/warning/warning_model.dart';
@@ -9,6 +8,7 @@ import '../../data/repositories/camera_repository.dart';
 import '../../data/repositories/speed_limit_repository.dart';
 import '../../features/map/map_service.dart';
 import '../../core/platform/android_service_bridge.dart';
+import '../../core/location/location_controller.dart';
 import '../../core/logger.dart';
 
 /// Controller for MapScreen to manage warning engine and state
@@ -18,21 +18,17 @@ class MapScreenController {
   final MapService _mapService = MapService.instance;
   final AndroidServiceBridge _androidBridge = AndroidServiceBridge.instance;
 
-  StreamSubscription<Position>? _positionSub;
   StreamSubscription<Warning>? _warningSub;
-  StreamController<Position>? _locationStreamController;
 
   // State
   Warning? _currentWarning;
   bool _hasMbtiles = false;
   bool _isEngineRunning = false;
-  Position? _lastPosition;
 
   // Getters
   Warning? get currentWarning => _currentWarning;
   bool get hasMbtiles => _hasMbtiles;
   bool get isEngineRunning => _isEngineRunning;
-  Position? get lastPosition => _lastPosition;
 
   // Streams
   final StreamController<Warning?> _warningController = StreamController<Warning?>.broadcast();
@@ -76,30 +72,21 @@ class MapScreenController {
     await SpeedLimitRepository.instance.load();
   }
 
-  /// Start warning engine (now uses location provider, not GPS stream)
+  /// Start warning engine (now uses unified LocationController stream)
   Future<void> startWarningEngine() async {
     if (_isEngineRunning) return;
 
     try {
       appLog('MapScreenController: Starting warning engine...');
 
-      // Create stream controller for location from provider
-      _locationStreamController = StreamController<Position>.broadcast();
-
-      // Start engine with stream controller
-      await _warningEngine.start(_locationStreamController!.stream);
+      // Start engine with unified LocationController stream
+      await _warningEngine.start(LocationController.instance.stream);
 
       _isEngineRunning = true;
-      appLog('MapScreenController: Warning engine started (using location provider)');
+      appLog('MapScreenController: Warning engine started (using unified LocationController stream)');
     } catch (e) {
       appLog('MapScreenController: Start engine failed: $e');
     }
-  }
-
-  /// Emit position to warning engine (called from MapScreen listener)
-  void emitPosition(Position position) {
-    _locationStreamController?.add(position);
-    _lastPosition = position;
   }
 
   /// Stop warning engine
@@ -107,8 +94,6 @@ class MapScreenController {
     if (!_isEngineRunning) return;
 
     _warningEngine.stop();
-    _positionSub?.cancel();
-    _positionSub = null;
     _isEngineRunning = false;
     appLog('MapScreenController: Warning engine stopped');
   }
@@ -153,8 +138,6 @@ class MapScreenController {
     stopWarningEngine();
     _warningSub?.cancel();
     _warningSub = null;
-    _locationStreamController?.close();
-    _locationStreamController = null;
     _warningController.close();
     _androidBridge.dispose();
     appLog('MapScreenController: Disposed');
