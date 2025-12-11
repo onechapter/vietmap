@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 void main() {
   print('=== Fix Schema & Generate Minified Files ===\n');

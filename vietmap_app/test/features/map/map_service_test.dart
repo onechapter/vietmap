@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vietmap_app/features/map/map_service.dart';
-import 'dart:io';
 
 void main() {
   group('MapService', () {

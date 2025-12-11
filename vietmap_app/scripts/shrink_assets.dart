@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:path/path.dart' as path;
 
 /// Script to shrink and optimize assets
 void main(List<String> args) {
