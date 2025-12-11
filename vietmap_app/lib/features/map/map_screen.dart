@@ -286,6 +286,15 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
   }
 
+  List<CameraModel> _queryCamerasInRadius(double lat, double lng, {required double radiusKm}) {
+    if (_cameras.isEmpty) return [];
+    final radiusM = radiusKm * 1000;
+    return _cameras.where((cam) {
+      final d = _distance(LatLng(cam.lat, cam.lng), LatLng(lat, lng));
+      return d <= radiusM;
+    }).toList();
+  }
+
   Future<void> _checkProximity() async {
     if (_currentLatLng == null || _cameras.isEmpty) return;
     final candidates = _cameraGrid.queryNeighborhood(_currentLatLng!.latitude, _currentLatLng!.longitude);
@@ -583,7 +592,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       );
     }
     if (_cameras.isNotEmpty && _currentLatLng != null) {
-      final visible = _cameraGrid.queryNeighborhood(_currentLatLng!.latitude, _currentLatLng!.longitude);
+      // Query cameras trong bán kính lớn hơn (5x5 cells thay vì 3x3)
+      final visible = _queryCamerasInRadius(_currentLatLng!.latitude, _currentLatLng!.longitude, radiusKm: 5.0);
+      _log('Cameras visible: ${visible.length} / ${_cameras.length}');
       markers.addAll(
         visible.map(
           (cam) => Marker(
@@ -597,7 +608,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   builder: (_) => CameraBottomSheet(camera: cam),
                 );
               },
-              child: Image.asset('assets/icons/camera.png', width: 32, height: 32),
+              child: Image.asset('assets/icons/camera.png', width: 32, height: 32, errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.camera_alt, color: Colors.red, size: 32);
+              }),
             ),
           ),
         ),
