@@ -15,9 +15,25 @@ import 'dart:io';
 ///
 /// The patch is idempotent (will not duplicate if already present).
 Future<void> main() async {
-  final pubCache = Platform.environment['PUB_CACHE'] ??
-      '${Platform.environment['HOME'] ?? Platform.environment['USERPROFILE']}'
-          '${Platform.pathSeparator}.pub-cache';
+  // Resolve pub cache path (supports Linux/macOS default ~/.pub-cache,
+  // Windows default %LOCALAPPDATA%/Pub/Cache, or PUB_CACHE override)
+  String? pubCache = Platform.environment['PUB_CACHE'];
+  if (pubCache == null || pubCache.isEmpty) {
+    // Windows: %LOCALAPPDATA%\Pub\Cache
+    final localAppData = Platform.environment['LOCALAPPDATA'];
+    if (localAppData != null && localAppData.isNotEmpty) {
+      final winPath =
+          '$localAppData${Platform.pathSeparator}Pub${Platform.pathSeparator}Cache';
+      if (Directory(winPath).existsSync()) {
+        pubCache = winPath;
+      }
+    }
+  }
+  if (pubCache == null || pubCache.isEmpty) {
+    // Fallback: ~/.pub-cache
+    final home = Platform.environment['HOME'] ?? Platform.environment['USERPROFILE'];
+    pubCache = '$home${Platform.pathSeparator}.pub-cache';
+  }
 
   final packageDir = Directory(
       '$pubCache${Platform.pathSeparator}hosted${Platform.pathSeparator}pub.dev${Platform.pathSeparator}maplibre_gl-0.16.0');
