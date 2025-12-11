@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'settings_repository.dart';
+import '../../simulation/simulation_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -174,6 +175,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onChanged: (value) {
               setState(() => _autoStart = value);
               _repo.setAutoStartEnabled(value);
+            },
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Simulation Mode'),
+            subtitle: const Text('Dev simulator: chọn Start/End + speed'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const SimulationScreen()),
+              );
             },
           ),
         ],
