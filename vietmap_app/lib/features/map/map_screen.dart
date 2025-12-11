@@ -540,8 +540,23 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       ref.listen<LatLng?>(currentLocationProvider, (prev, next) {
         if (!mounted || next == null) return;
         
+        final simService = ref.read(routeSimulatorProvider.notifier);
         final isFromSimulator = ref.read(routeSimulatorProvider) != null;
         appLog('SIM POS: $next (from simulator: $isFromSimulator)');
+        
+        // Cập nhật _currentLatLng để các method khác dùng
+        setState(() {
+          _currentLatLng = next;
+        });
+        
+        // Auto-zoom khi simulator bắt đầu (lần đầu tiên có location từ simulator)
+        if (isFromSimulator && (prev == null || prev != next)) {
+          _moveTo(next, zoom: 16.0);
+          _autoFollowFake = true; // Bật auto-follow khi simulator chạy
+        }
+        
+        // Lấy tốc độ từ simulator nếu đang chạy, mặc định 0
+        final speedKmh = isFromSimulator && simService.running ? simService.speedKmh : 0.0;
         
         // Cập nhật UI
         final pos = Position(
@@ -551,30 +566,31 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           accuracy: isFromSimulator ? 5 : 10,
           altitude: 0,
           heading: 0,
-          speed: 0,
+          speed: speedKmh / 3.6, // m/s
           speedAccuracy: 0,
           altitudeAccuracy: 0,
           headingAccuracy: 0,
         );
         _applyPosition(pos, isFake: isFromSimulator);
         
-        // Evaluate WarningEngine với location mới
+        // Emit position vào WarningEngine stream
+        _controller.emitPosition(pos);
+        
+        // Evaluate WarningEngine với location mới (backup method)
         final warningEngine = ref.read(warningEngineProvider);
-        final simService = ref.read(routeSimulatorProvider.notifier);
-        // Lấy tốc độ từ simulator nếu đang chạy, mặc định 0
-        final speedKmh = isFromSimulator && simService.running ? simService.speedKmh : 0.0;
         warningEngine.evaluate(next, speedKmh: speedKmh);
         appLog('Warning evaluated at $next');
       });
     }
     
-    // Cập nhật UI khi location thay đổi
-    if (currentLocation != null && mounted) {
+    // Cập nhật UI khi location thay đổi từ provider
+    final displayLocation = currentLocation ?? _currentLatLng;
+    if (displayLocation != null && mounted) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final isFromSimulator = ref.read(routeSimulatorProvider) != null;
         final pos = Position(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
+          latitude: displayLocation.latitude,
+          longitude: displayLocation.longitude,
           timestamp: DateTime.now(),
           accuracy: isFromSimulator ? 5 : 10,
           altitude: 0,
@@ -589,19 +605,19 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
     
     final markers = <Marker>[];
-    if (_currentLatLng != null) {
+    if (displayLocation != null) {
       markers.add(
         Marker(
           width: 40,
           height: 40,
-          point: _currentLatLng!,
+          point: displayLocation,
           child: const Icon(Icons.my_location, color: Colors.blue, size: 32),
         ),
       );
     }
-    if (_cameras.isNotEmpty && _currentLatLng != null) {
+    if (_cameras.isNotEmpty && displayLocation != null) {
       // Query cameras trong bán kính lớn hơn (5x5 cells thay vì 3x3)
-      final visible = _queryCamerasInRadius(_currentLatLng!.latitude, _currentLatLng!.longitude, radiusKm: 5.0);
+      final visible = _queryCamerasInRadius(displayLocation.latitude, displayLocation.longitude, radiusKm: 5.0);
       _log('Cameras visible: ${visible.length} / ${_cameras.length}');
       markers.addAll(
         visible.map(

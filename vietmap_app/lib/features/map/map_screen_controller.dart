@@ -20,6 +20,7 @@ class MapScreenController {
 
   StreamSubscription<Position>? _positionSub;
   StreamSubscription<Warning>? _warningSub;
+  StreamController<Position>? _locationStreamController;
 
   // State
   Warning? _currentWarning;
@@ -75,39 +76,30 @@ class MapScreenController {
     await SpeedLimitRepository.instance.load();
   }
 
-  /// Start warning engine with GPS stream
+  /// Start warning engine (now uses location provider, not GPS stream)
   Future<void> startWarningEngine() async {
     if (_isEngineRunning) return;
 
     try {
       appLog('MapScreenController: Starting warning engine...');
 
-      // Get location stream
-      final locationSettings = const LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
-      );
+      // Create stream controller for location from provider
+      _locationStreamController = StreamController<Position>.broadcast();
 
-      final positionStream = Geolocator.getPositionStream(locationSettings: locationSettings);
-
-      // Start engine
-      await _warningEngine.start(positionStream);
-
-      // Track positions
-      _positionSub = positionStream.listen(
-        (position) {
-          _lastPosition = position;
-        },
-        onError: (e) {
-          appLog('MapScreenController: Position stream error: $e');
-        },
-      );
+      // Start engine with stream controller
+      await _warningEngine.start(_locationStreamController!.stream);
 
       _isEngineRunning = true;
-      appLog('MapScreenController: Warning engine started');
+      appLog('MapScreenController: Warning engine started (using location provider)');
     } catch (e) {
       appLog('MapScreenController: Start engine failed: $e');
     }
+  }
+
+  /// Emit position to warning engine (called from MapScreen listener)
+  void emitPosition(Position position) {
+    _locationStreamController?.add(position);
+    _lastPosition = position;
   }
 
   /// Stop warning engine
@@ -161,6 +153,8 @@ class MapScreenController {
     stopWarningEngine();
     _warningSub?.cancel();
     _warningSub = null;
+    _locationStreamController?.close();
+    _locationStreamController = null;
     _warningController.close();
     _androidBridge.dispose();
     appLog('MapScreenController: Disposed');

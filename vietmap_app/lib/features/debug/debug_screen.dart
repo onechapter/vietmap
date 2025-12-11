@@ -41,10 +41,10 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
       TextEditingController(text: '106.660172');
   bool _fakeToggle = false;
   // Route simulator
-  final TextEditingController _simStartLat = TextEditingController(text: '11.488688');
-  final TextEditingController _simStartLng = TextEditingController(text: '106.614503');
-  final TextEditingController _simEndLat = TextEditingController(text: '11.500000');
-  final TextEditingController _simEndLng = TextEditingController(text: '106.620000');
+  final TextEditingController _simStartLat = TextEditingController(text: '11.502031');
+  final TextEditingController _simStartLng = TextEditingController(text: '106.614439');
+  final TextEditingController _simEndLat = TextEditingController(text: '11.481693');
+  final TextEditingController _simEndLng = TextEditingController(text: '106.614505');
   double _simSpeed = 40;
   bool _routeLoading = false;
   String? _routeError;
