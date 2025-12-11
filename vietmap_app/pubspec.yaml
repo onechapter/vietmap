@@ -76,7 +76,6 @@ flutter:
     - assets/cameras/
     - assets/local_rules/
     - assets/icons/camera.png
-    - data_sources/final/vietmap.mbtiles
     - config/map_layers.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
