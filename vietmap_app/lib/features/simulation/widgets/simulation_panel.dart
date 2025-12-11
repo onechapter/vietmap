@@ -47,11 +47,11 @@ class SimulationPanel extends StatelessWidget {
             const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerLeft,
-              child: TextButton.icon(
-                onPressed: onClear,
-                icon: const Icon(Icons.clear),
-                label: const Text('Clear route'),
-              ),
+            child: TextButton.icon(
+              onPressed: onClear,
+              icon: const Icon(Icons.clear),
+              label: const Text('Xoá lộ trình'),
+            ),
             ),
           ],
         ),
@@ -63,8 +63,8 @@ class SimulationPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _pointRow('Start', state.start),
-        _pointRow('End', state.end),
+        _pointRow('Điểm đầu', state.start),
+        _pointRow('Điểm cuối', state.end),
       ],
     );
   }
@@ -87,21 +87,21 @@ class SimulationPanel extends StatelessWidget {
         Expanded(
           child: ElevatedButton(
             onPressed: state.isRunning ? null : onStart,
-            child: const Text('Start'),
+            child: const Text('Bắt đầu'),
           ),
         ),
         const SizedBox(width: 6),
         Expanded(
           child: ElevatedButton(
             onPressed: state.isRunning ? onPause : null,
-            child: Text(state.isPaused ? 'Resume' : 'Pause'),
+            child: Text(state.isPaused ? 'Tiếp tục' : 'Tạm dừng'),
           ),
         ),
         const SizedBox(width: 6),
         Expanded(
           child: ElevatedButton(
             onPressed: state.isRunning ? onStop : null,
-            child: const Text('Stop'),
+            child: const Text('Dừng'),
           ),
         ),
       ],
@@ -112,7 +112,7 @@ class SimulationPanel extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Speed: ${state.speedKmh.toStringAsFixed(0)} km/h'),
+        Text('Tốc độ: ${state.speedKmh.toStringAsFixed(0)} km/h'),
         Slider(
           min: 5,
           max: 120,
@@ -128,13 +128,13 @@ class SimulationPanel extends StatelessWidget {
       children: [
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Follow camera'),
+          title: const Text('Theo dõi camera'),
           value: state.follow,
           onChanged: onFollowChanged,
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Loop route'),
+          title: const Text('Lặp lại lộ trình'),
           value: state.loop,
           onChanged: onLoopChanged,
         ),
@@ -148,22 +148,22 @@ class SimulationPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'HUD',
+          'Bảng HUD',
           style: Theme.of(context)
               .textTheme
               .labelLarge
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
-        Text('Segment: ${state.segmentIndex} / ${state.routeLengthM.toStringAsFixed(0)} m'),
+        Text('Đoạn: ${state.segmentIndex} / ${state.routeLengthM.toStringAsFixed(0)} m'),
         Text(
           state.current == null
-              ? 'Pos: -'
-              : 'Pos: ${state.current!.latitude.toStringAsFixed(5)}, ${state.current!.longitude.toStringAsFixed(5)}',
+              ? 'Vị trí: -'
+              : 'Vị trí: ${state.current!.latitude.toStringAsFixed(5)}, ${state.current!.longitude.toStringAsFixed(5)}',
         ),
-        Text('Speed: ${state.speedKmh.toStringAsFixed(1)} km/h'),
+        Text('Tốc độ: ${state.speedKmh.toStringAsFixed(1)} km/h'),
         Text(
-          'Warnings → speed:${w['speed'] ?? 0} cam:${w['camera'] ?? 0} '
-          'danger:${w['danger'] ?? 0} rail:${w['rail'] ?? 0}',
+          'Cảnh báo → tốc độ:${w['speed'] ?? 0} camera:${w['camera'] ?? 0} '
+          'nguy hiểm:${w['danger'] ?? 0} đường sắt:${w['rail'] ?? 0}',
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -20,19 +21,22 @@ import '../../ui/hud/speedometer.dart';
 import '../../ui/hud/speed_limit_sign.dart';
 import '../../ui/widgets/camera_bottom_sheet.dart';
 import '../../ui/widgets/warning_banner.dart';
+import '../debug/debug_screen.dart';
+import '../debug/fake_location_service.dart';
+import '../debug/route_simulator_service.dart';
 import '../../features/warning/warning_model.dart';
 import '../../config/map_layers_loader.dart';
 import 'map_service.dart';
 import 'map_screen_controller.dart';
 
-class MapScreen extends StatefulWidget {
+class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _MapScreenState extends ConsumerState<MapScreen> {
   final MapController _mapController = MapController();
   StreamSubscription<Position>? _positionSub;
   late final FlutterTts _tts;
@@ -67,6 +71,10 @@ class _MapScreenState extends State<MapScreen> {
   late final MapScreenController _controller;
   StreamSubscription? _warningStreamSub;
   Warning? _currentWarning;
+  // ignore: unused_field
+  StreamSubscription<Position?>? _fakeSub;
+  bool _fakeEnabled = false;
+  Marker? _fakeMarker;
 
   @override
   void initState() {
@@ -91,6 +99,45 @@ class _MapScreenState extends State<MapScreen> {
     });
     // Start warning engine when map is ready
     await _controller.startWarningEngine();
+
+    // Lắng nghe vị trí giả lập (RouteSimulator - Riverpod)
+    ref.listen<LatLng?>(routeSimulatorProvider, (prev, next) {
+      if (next == null) {
+        if (!FakeLocationService.instance.enabled) {
+          setState(() {
+            _fakeEnabled = false;
+            _fakeMarker = null;
+          });
+        }
+        return;
+      }
+      final pos = Position(
+        latitude: next.latitude,
+        longitude: next.longitude,
+        timestamp: DateTime.now(),
+        accuracy: 5,
+        altitude: 0,
+        heading: 0,
+        speed: 0,
+        speedAccuracy: 0,
+        altitudeAccuracy: 0,
+        headingAccuracy: 0,
+      );
+      _applyPosition(pos, isFake: true);
+    });
+
+    // Lắng nghe vị trí giả lập
+    _fakeSub = FakeLocationService.instance.stream.listen((pos) {
+      if (!mounted) return;
+      if (pos == null) {
+        setState(() {
+          _fakeEnabled = false;
+          _fakeMarker = null;
+        });
+        return;
+      }
+      _applyPosition(pos, isFake: true);
+    });
   }
 
   Future<void> _initMapService() async {
@@ -134,6 +181,31 @@ class _MapScreenState extends State<MapScreen> {
 
   void _log(String message) {
     appLog('[MapScreen] $message');
+  }
+
+  void _applyPosition(Position pos, {required bool isFake}) {
+    final next = LatLng(pos.latitude, pos.longitude);
+    setState(() {
+      _fakeEnabled = isFake;
+      _currentLatLng = next;
+      _currentSpeedKmh = (pos.speed * 3.6).clamp(0, 300);
+      _filteredSpeedKmh = _smoother.update(_currentSpeedKmh);
+      _fakeMarker = isFake
+          ? Marker(
+              width: 38,
+              height: 38,
+              point: next,
+              child: const Icon(Icons.place, color: Colors.deepPurple, size: 34),
+            )
+          : null;
+    });
+    _log('Tick pos=$next fake=$isFake speed_raw=${_currentSpeedKmh.toStringAsFixed(1)} speed_f=${_filteredSpeedKmh.toStringAsFixed(1)} bucket=${_bucketKey(next)}');
+    _checkProximity();
+    _checkRules();
+    _updateCurrentSpeedLimit();
+    if (isFake && _mapReady) {
+      _moveTo(next, zoom: 16);
+    }
   }
 
   Future<void> _initTts() async {
@@ -203,16 +275,8 @@ class _MapScreenState extends State<MapScreen> {
       _positionSub = Geolocator.getPositionStream(locationSettings: locationSettings)
           .listen(
         (Position pos) {
-          final next = LatLng(pos.latitude, pos.longitude);
-          setState(() {
-            _currentLatLng = next;
-            _currentSpeedKmh = (pos.speed * 3.6).clamp(0, 300);
-            _filteredSpeedKmh = _smoother.update(_currentSpeedKmh);
-          });
-          _log('Tick pos=$next speed_raw=${_currentSpeedKmh.toStringAsFixed(1)} speed_f=${_filteredSpeedKmh.toStringAsFixed(1)} bucket=${_bucketKey(next)}');
-          _checkProximity();
-          _checkRules();
-          _updateCurrentSpeedLimit();
+          if (_fakeEnabled) return; // đang giả lập thì bỏ GPS thật
+          _applyPosition(pos, isFake: false);
         },
         onError: (e) async {
           _log('Position stream error: $e');
@@ -230,11 +294,11 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  void _moveTo(LatLng target) {
+  void _moveTo(LatLng target, {double? zoom}) {
     if (!_mapReady) return;
     try {
-      final zoom = _mapController.camera.zoom;
-      _mapController.move(target, zoom);
+      final z = zoom ?? _mapController.camera.zoom;
+      _mapController.move(target, z);
     } catch (_) {
       // Nếu map chưa render kịp, bỏ qua.
     }
@@ -264,7 +328,7 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> _speakWarning() async {
     if (!_ttsEnabled) {
-      if (await Vibration.hasVibrator() ?? false) {
+      if (await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 500);
       }
       _log('TTS disabled, vibrated instead');
@@ -274,7 +338,7 @@ class _MapScreenState extends State<MapScreen> {
       await _tts.speak('Sắp đến camera phạt nguội phía trước');
     } catch (_) {
       _ttsEnabled = false;
-      if (await Vibration.hasVibrator() ?? false) {
+      if (await Vibration.hasVibrator()) {
         Vibration.vibrate(duration: 500);
       }
       _log('TTS speak failed, disabled & vibrated');
@@ -620,6 +684,7 @@ class _MapScreenState extends State<MapScreen> {
                         ),
                         if (polygons.isNotEmpty) PolygonLayer(polygons: polygons),
                         MarkerLayer(markers: markers),
+                        if (_fakeMarker != null) MarkerLayer(markers: [_fakeMarker!]),
                         if (railwayMarkers.isNotEmpty) MarkerLayer(markers: railwayMarkers),
                       ],
                     ),
@@ -689,14 +754,30 @@ class _MapScreenState extends State<MapScreen> {
                 ),
       floatingActionButton: _currentLatLng == null
           ? null
-          : FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  _hudMode = !_hudMode;
-                });
-                _moveTo(_currentLatLng!);
-              },
-              child: Icon(_hudMode ? Icons.screen_rotation : Icons.my_location),
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
+                  heroTag: 'hud-btn',
+                  onPressed: () {
+                    setState(() {
+                      _hudMode = !_hudMode;
+                    });
+                    _moveTo(_currentLatLng!);
+                  },
+                  child: Icon(_hudMode ? Icons.screen_rotation : Icons.my_location),
+                ),
+                const SizedBox(height: 12),
+                FloatingActionButton(
+                  heroTag: 'debug-btn',
+                  child: const Icon(Icons.bug_report),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const DebugScreen()),
+                    );
+                  },
+                ),
+              ],
             ),
     );
   }

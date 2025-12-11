@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:ui';
 import 'dart:math' show Point;
 
 import 'package:flutter/material.dart';
@@ -63,7 +61,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget build(BuildContext context) {
     final state = _controller.state;
     return Scaffold(
-      appBar: AppBar(title: const Text('Simulation Mode')),
+      appBar: AppBar(title: const Text('Chế độ mô phỏng')),
       body: Stack(
         children: [
           MapLibreMap(

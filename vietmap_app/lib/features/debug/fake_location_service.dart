@@ -1,52 +1,63 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
-import '../../features/warning/warning_engine.dart';
 import '../../core/logger.dart';
 
-/// Fake location service for testing warning engine
+/// Fake location service cho debug/simulator
 class FakeLocationService {
-  StreamController<Position>? _controller;
+  FakeLocationService._();
+  static final FakeLocationService instance = FakeLocationService._();
+
+  final StreamController<Position?> _controller = StreamController.broadcast();
+  bool enabled = false;
+  Position? _current;
   Timer? _timer;
-  WarningEngine? _engine;
 
-  /// Start simulating location at given coordinates
-  Future<void> startSimulating(double lat, double lng) async {
-    if (_controller != null) return;
+  Stream<Position?> get stream => _controller.stream;
+  Position? get current => _current;
 
-    _controller = StreamController<Position>.broadcast();
-    _engine = WarningEngine();
-    await _engine!.start(_controller!.stream);
-
-    // Emit position every 1 second
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      final position = Position(
-        latitude: lat,
-        longitude: lng,
-        timestamp: DateTime.now(),
-        accuracy: 10,
-        altitude: 0,
-        heading: 0,
-        speed: 0,
-        speedAccuracy: 0,
-        altitudeAccuracy: 0,
-        headingAccuracy: 0,
-      );
-      _controller?.add(position);
-      appLog('FakeLocationService: Emitted position $lat, $lng');
-    });
-
-    appLog('FakeLocationService: Started simulating at $lat, $lng');
+  /// Bật giả lập tại vị trí mặc định (Có thể mở rộng nhận tham số)
+  void enableFake({double lat = 11.488688, double lng = 106.614503}) {
+    enabled = true;
+    _emit(lat, lng);
+    // Lặp lại mỗi 1s để giữ dòng vị trí ổn định
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) => _emit(lat, lng));
+    appLog('FakeLocationService: Enabled at $lat, $lng');
   }
 
-  /// Stop simulating
-  void stopSimulating() {
+  void disableFake() {
+    enabled = false;
     _timer?.cancel();
     _timer = null;
-    _engine?.stop();
-    _engine = null;
-    _controller?.close();
-    _controller = null;
-    appLog('FakeLocationService: Stopped');
+    _current = null;
+    _controller.add(null);
+    appLog('FakeLocationService: Disabled');
+  }
+
+  void _emit(double lat, double lng) {
+    final position = Position(
+      latitude: lat,
+      longitude: lng,
+      timestamp: DateTime.now(),
+      accuracy: 5,
+      altitude: 0,
+      heading: 0,
+      speed: 0,
+      speedAccuracy: 0,
+      altitudeAccuracy: 0,
+      headingAccuracy: 0,
+    );
+    _current = position;
+    _controller.add(position);
+  }
+
+  /// API cũ: mô phỏng một vị trí tùy ý (sử dụng ngay lập tức, không bật flag)
+  Future<void> startSimulating(double lat, double lng) async {
+    enableFake(lat: lat, lng: lng);
+  }
+
+  void stopSimulating() {
+    disableFake();
   }
 }
 

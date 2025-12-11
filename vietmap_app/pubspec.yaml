@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^2.2.2
   crypto: ^3.0.3
   connectivity_plus: ^7.0.0
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,10 @@ flutter:
     - assets/local_rules/
     - assets/icons/camera.png
     - config/map_layers.json
+    - data_sources/final/danger_zone.min.json
+    - data_sources/final/railway.min.json
+    - data_sources/final/cameras.min.json
+    - data_sources/final/speed_limit.min.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

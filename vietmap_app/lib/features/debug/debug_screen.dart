@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 import '../../data/repositories/danger_zone_repository.dart';
 import '../../data/repositories/railway_repository.dart';
 import '../../data/repositories/camera_repository.dart';
@@ -8,21 +10,42 @@ import '../../features/warning/warning_manager.dart';
 import 'fake_location_service.dart';
 import 'live_overlay_controller.dart';
 import 'debug_upload_screen.dart';
+import 'route_simulator_service.dart';
 
-class DebugScreen extends StatefulWidget {
+class DebugScreen extends ConsumerStatefulWidget {
   const DebugScreen({super.key});
 
   @override
-  State<DebugScreen> createState() => _DebugScreenState();
+  ConsumerState<DebugScreen> createState() => _DebugScreenState();
 }
 
-class _DebugScreenState extends State<DebugScreen> {
+class _DebugScreenState extends ConsumerState<DebugScreen> {
   final List<Map<String, dynamic>> _warningHistory = [];
-  final FakeLocationService _fakeLocation = FakeLocationService();
+  final FakeLocationService _fakeLocation = FakeLocationService.instance;
   final LiveOverlayController _overlayController = LiveOverlayController.instance;
   StreamSubscription? _warningSub;
   bool _isSimulating = false;
   bool _overlayEnabled = false;
+  // Controllers giữ giá trị nhập để không bị reset sau setState
+  final TextEditingController _queryLatController =
+      TextEditingController(text: '10.762622');
+  final TextEditingController _queryLngController =
+      TextEditingController(text: '106.660172');
+  final TextEditingController _queryRadiusController =
+      TextEditingController(text: '500');
+  final List<String> _queryResults = [];
+
+  final TextEditingController _simLatController =
+      TextEditingController(text: '10.762622');
+  final TextEditingController _simLngController =
+      TextEditingController(text: '106.660172');
+  bool _fakeToggle = false;
+  // Route simulator
+  final TextEditingController _simStartLat = TextEditingController(text: '11.488688');
+  final TextEditingController _simStartLng = TextEditingController(text: '106.614503');
+  final TextEditingController _simEndLat = TextEditingController(text: '11.500000');
+  final TextEditingController _simEndLng = TextEditingController(text: '106.620000');
+  double _simSpeed = 40;
 
   @override
   void initState() {
@@ -58,6 +81,15 @@ class _DebugScreenState extends State<DebugScreen> {
   @override
   void dispose() {
     _warningSub?.cancel();
+    _queryLatController.dispose();
+    _queryLngController.dispose();
+    _queryRadiusController.dispose();
+    _simLatController.dispose();
+    _simLngController.dispose();
+    _simStartLat.dispose();
+    _simStartLng.dispose();
+    _simEndLat.dispose();
+    _simEndLng.dispose();
     super.dispose();
   }
 
@@ -65,7 +97,7 @@ class _DebugScreenState extends State<DebugScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Debug Tools'),
+        title: const Text('Công cụ debug'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -81,6 +113,8 @@ class _DebugScreenState extends State<DebugScreen> {
           _buildWarningHistory(),
           const Divider(),
           _buildCooldownViewer(),
+          const Divider(),
+          _buildRouteSimulator(context),
         ],
       ),
     );
@@ -93,11 +127,11 @@ class _DebugScreenState extends State<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Live Overlay', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Lớp phủ trực tiếp', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             SwitchListTile(
-              title: const Text('Enable Live Overlay'),
-              subtitle: const Text('Show FPS and Dart VM metrics'),
+              title: const Text('Bật lớp phủ'),
+              subtitle: const Text('Hiển thị FPS và chỉ số Dart VM'),
               value: _overlayEnabled,
               onChanged: (value) {
                 setState(() {
@@ -123,7 +157,7 @@ class _DebugScreenState extends State<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Repository Info', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Thông tin dữ liệu', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Text('Danger Zones: ${DangerZoneRepository.instance.count}'),
             Text('Railway: ${RailwayRepository.instance.count}'),
@@ -136,54 +170,50 @@ class _DebugScreenState extends State<DebugScreen> {
   }
 
   Widget _buildQueryTester() {
-    final latController = TextEditingController(text: '10.762622');
-    final lngController = TextEditingController(text: '106.660172');
-    final radiusController = TextEditingController(text: '500');
-    List<String> results = [];
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Query Nearby Tester', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Kiểm thử truy vấn lân cận', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             TextField(
-              controller: latController,
-              decoration: const InputDecoration(labelText: 'Latitude'),
+              controller: _queryLatController,
+              decoration: const InputDecoration(labelText: 'Vĩ độ'),
               keyboardType: TextInputType.number,
             ),
             TextField(
-              controller: lngController,
-              decoration: const InputDecoration(labelText: 'Longitude'),
+              controller: _queryLngController,
+              decoration: const InputDecoration(labelText: 'Kinh độ'),
               keyboardType: TextInputType.number,
             ),
             TextField(
-              controller: radiusController,
-              decoration: const InputDecoration(labelText: 'Radius (m)'),
+              controller: _queryRadiusController,
+              decoration: const InputDecoration(labelText: 'Bán kính (m)'),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                final lat = double.tryParse(latController.text) ?? 0;
-                final lng = double.tryParse(lngController.text) ?? 0;
-                final radius = double.tryParse(radiusController.text) ?? 500;
+                final lat = double.tryParse(_queryLatController.text) ?? 0;
+                final lng = double.tryParse(_queryLngController.text) ?? 0;
+                final radius = double.tryParse(_queryRadiusController.text) ?? 500;
 
-                results.clear();
-                results.add('Danger: ${DangerZoneRepository.instance.queryNearby(lat, lng, radius).length}');
-                results.add('Railway: ${RailwayRepository.instance.queryNearby(lat, lng, radius).length}');
-                results.add('Cameras: ${CameraRepository.instance.queryNearby(lat, lng, radius).length}');
-                results.add('Speed: ${SpeedLimitRepository.instance.queryNearby(lat, lng, radius).length}');
+                _queryResults
+                  ..clear()
+                  ..add('Nguy hiểm: ${DangerZoneRepository.instance.queryNearby(lat, lng, radius).length}')
+                  ..add('Đường sắt: ${RailwayRepository.instance.queryNearby(lat, lng, radius).length}')
+                  ..add('Camera: ${CameraRepository.instance.queryNearby(lat, lng, radius).length}')
+                  ..add('Tốc độ: ${SpeedLimitRepository.instance.queryNearby(lat, lng, radius).length}');
 
                 setState(() {});
               },
-              child: const Text('Query'),
+              child: const Text('Truy vấn'),
             ),
-            if (results.isNotEmpty) ...[
+            if (_queryResults.isNotEmpty) ...[
               const SizedBox(height: 8),
-              ...results.map((r) => Text(r)),
+              ..._queryResults.map((r) => Text(r)),
             ],
           ],
         ),
@@ -192,32 +222,42 @@ class _DebugScreenState extends State<DebugScreen> {
   }
 
   Widget _buildGpsSimulator() {
-    final latController = TextEditingController(text: '10.762622');
-    final lngController = TextEditingController(text: '106.660172');
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('GPS Simulator', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SwitchListTile(
+              title: const Text('Giả lập vị trí'),
+              subtitle: const Text('Dùng vị trí cố định 11.488688, 106.614503'),
+              value: _fakeToggle,
+              onChanged: (v) {
+                setState(() => _fakeToggle = v);
+                if (v) {
+                  FakeLocationService.instance.enableFake();
+                } else {
+                  FakeLocationService.instance.disableFake();
+                }
+              },
+            ),
+            const Text('Mô phỏng GPS', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             TextField(
-              controller: latController,
-              decoration: const InputDecoration(labelText: 'Latitude'),
+              controller: _simLatController,
+              decoration: const InputDecoration(labelText: 'Vĩ độ'),
               keyboardType: TextInputType.number,
             ),
             TextField(
-              controller: lngController,
-              decoration: const InputDecoration(labelText: 'Longitude'),
+              controller: _simLngController,
+              decoration: const InputDecoration(labelText: 'Kinh độ'),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () async {
-                final lat = double.tryParse(latController.text) ?? 0;
-                final lng = double.tryParse(lngController.text) ?? 0;
+                final lat = double.tryParse(_simLatController.text) ?? 0;
+                final lng = double.tryParse(_simLngController.text) ?? 0;
 
                 if (!_isSimulating) {
                   await _fakeLocation.startSimulating(lat, lng);
@@ -227,7 +267,90 @@ class _DebugScreenState extends State<DebugScreen> {
                   setState(() => _isSimulating = false);
                 }
               },
-              child: Text(_isSimulating ? 'Stop' : 'Start Simulating'),
+              child: Text(_isSimulating ? 'Dừng' : 'Bắt đầu mô phỏng'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRouteSimulator(BuildContext context) {
+    final sim = ref.watch(routeSimulatorProvider.notifier);
+    final running = ref.watch(routeSimulatorProvider) != null;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Mô phỏng lộ trình', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            const Text('Điểm đầu'),
+            TextField(
+              controller: _simStartLat,
+              decoration: const InputDecoration(labelText: 'Vĩ độ đầu'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: _simStartLng,
+              decoration: const InputDecoration(labelText: 'Kinh độ đầu'),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 12),
+            const Text('Điểm cuối'),
+            TextField(
+              controller: _simEndLat,
+              decoration: const InputDecoration(labelText: 'Vĩ độ cuối'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: _simEndLng,
+              decoration: const InputDecoration(labelText: 'Kinh độ cuối'),
+              keyboardType: TextInputType.number,
+            ),
+            const SizedBox(height: 12),
+            Text('Tốc độ: ${_simSpeed.toStringAsFixed(0)} km/h'),
+            Slider(
+              value: _simSpeed,
+              min: 20,
+              max: 120,
+              divisions: 10,
+              label: '${_simSpeed.toStringAsFixed(0)} km/h',
+              onChanged: (v) => setState(() => _simSpeed = v),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final start = LatLng(
+                        double.tryParse(_simStartLat.text) ?? 0,
+                        double.tryParse(_simStartLng.text) ?? 0,
+                      );
+                      final end = LatLng(
+                        double.tryParse(_simEndLat.text) ?? 0,
+                        double.tryParse(_simEndLng.text) ?? 0,
+                      );
+                      sim.start(start: start, end: end, speedKmH: _simSpeed);
+                    },
+                    child: const Text('Bắt đầu mô phỏng'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => sim.stop(),
+                    child: const Text('Dừng'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              running ? 'Đang mô phỏng' : 'Đã dừng',
+              style: TextStyle(color: running ? Colors.green : Colors.grey),
             ),
           ],
         ),
@@ -242,14 +365,14 @@ class _DebugScreenState extends State<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Warning History', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Lịch sử cảnh báo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             if (_warningHistory.isEmpty)
-              const Text('No warnings yet')
+              const Text('Chưa có cảnh báo')
             else
               ..._warningHistory.take(20).map((w) => ListTile(
                     title: Text('${w['type']} - ${w['id']}'),
-                    subtitle: Text('${w['distance']}m at ${w['time']}'),
+                    subtitle: Text('${w['distance']}m lúc ${w['time']}'),
                     dense: true,
                   )),
           ],
@@ -265,16 +388,16 @@ class _DebugScreenState extends State<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Cooldown Viewer', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Xem cooldown', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () async {
                 // Show cooldown info (would need to query DB)
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Cooldown data in database')),
+                  const SnackBar(content: Text('Dữ liệu cooldown trong CSDL')),
                 );
               },
-              child: const Text('View Cooldowns'),
+              child: const Text('Xem cooldown'),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
@@ -287,7 +410,7 @@ class _DebugScreenState extends State<DebugScreen> {
                 );
               },
               icon: const Icon(Icons.upload),
-              label: const Text('Upload Logs'),
+              label: const Text('Tải lên log'),
             ),
           ],
         ),

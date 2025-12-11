@@ -9,8 +9,9 @@ import 'camera_model.dart';
 
 class CameraRepository {
   final CameraCache _cache = CameraCache();
+  // Dùng 10.0.2.2 làm mặc định để emulator/device truy cập host machine; có thể override qua --dart-define=CAMERA_API
   final CameraApiService _api = CameraApiService(
-    baseUrl: const String.fromEnvironment('CAMERA_API', defaultValue: 'http://localhost:8080'),
+    baseUrl: const String.fromEnvironment('CAMERA_API', defaultValue: 'http://10.0.2.2:8080'),
   );
   DateTime? _lastFetch;
 

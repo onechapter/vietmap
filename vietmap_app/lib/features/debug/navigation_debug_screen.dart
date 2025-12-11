@@ -21,7 +21,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Navigation Debug'),
+        title: const Text('Debug điều hướng'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -47,11 +47,11 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Route Preview', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Xem trước lộ trình', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             TextField(
               decoration: const InputDecoration(
-                labelText: 'From (lat,lng)',
+                labelText: 'Điểm đi (vĩ,kinh)',
                 hintText: '10.762622,106.660172',
               ),
               onSubmitted: (value) => _loadRoute(value, null),
@@ -59,7 +59,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
             const SizedBox(height: 8),
             TextField(
               decoration: const InputDecoration(
-                labelText: 'To (lat,lng)',
+                labelText: 'Điểm đến (vĩ,kinh)',
                 hintText: '10.771123,106.653789',
               ),
               onSubmitted: (value) => _loadRoute(null, value),
@@ -70,11 +70,11 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
                 // Default route for testing
                 _loadRoute('10.762622,106.660172', '10.771123,106.653789');
               },
-              child: const Text('Load Test Route'),
+              child: const Text('Tải lộ trình mẫu'),
             ),
             if (_currentRoute != null) ...[
               const SizedBox(height: 16),
-              Text('Route loaded: ${_currentRoute!.distance.toStringAsFixed(0)}m, ${_currentRoute!.steps.length} steps'),
+              Text('Đã tải: ${_currentRoute!.distance.toStringAsFixed(0)} m, ${_currentRoute!.steps.length} bước'),
             ],
           ],
         ),
@@ -89,13 +89,13 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Route Simulator', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Mô phỏng lộ trình', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             if (_currentRoute == null)
-              const Text('Load a route first')
+              const Text('Hãy tải lộ trình trước')
             else ...[
               SwitchListTile(
-                title: const Text('Start Simulation'),
+                title: const Text('Bắt đầu mô phỏng'),
                 value: _isSimulating,
                 onChanged: (value) {
                   setState(() => _isSimulating = value);
@@ -107,7 +107,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              const Text('Speed:'),
+              const Text('Tốc độ:'),
               Slider(
                 value: 50.0,
                 min: 10,
@@ -134,7 +134,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Step Viewer', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Xem bước dẫn đường', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             NavigationStepViewer(route: _currentRoute!),
           ],
@@ -150,26 +150,26 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Reroute Simulator', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Mô phỏng tính toán lại lộ trình', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
                 // Force off-route
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Off-route triggered (simulated)')),
+                  const SnackBar(content: Text('Đã kích hoạt lệch tuyến (giả lập)')),
                 );
               },
-              child: const Text('Force Off-Route'),
+              child: const Text('Giả lập lệch tuyến'),
             ),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
                 // Manual reroute
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Manual reroute triggered')),
+                  const SnackBar(content: Text('Đã kích hoạt tính lại lộ trình')),
                 );
               },
-              child: const Text('Manual Reroute'),
+              child: const Text('Tính lại lộ trình thủ công'),
             ),
           ],
         ),
@@ -199,7 +199,7 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
       if (from == null || to == null) {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid coordinates')),
+          const SnackBar(content: Text('Toạ độ không hợp lệ')),
         );
         return;
       }
@@ -210,13 +210,13 @@ class _NavigationDebugScreenState extends State<NavigationDebugScreen> {
       } else {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to load route')),
+          const SnackBar(content: Text('Tải lộ trình thất bại')),
         );
       }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
+        SnackBar(content: Text('Lỗi: $e')),
       );
     }
   }
