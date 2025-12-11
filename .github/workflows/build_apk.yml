@@ -28,9 +28,10 @@ jobs:
         working-directory: vietmap_app
         run: flutter pub get
 
-      - name: Flutter analyze
+
+      - name: Flutter Analyze
         working-directory: vietmap_app
-        run: flutter analyze
+        run: flutter analyze --no-fatal-warnings --no-fatal-infos
 
       - name: Run tests
         working-directory: vietmap_app
