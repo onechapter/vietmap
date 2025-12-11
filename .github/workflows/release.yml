@@ -20,6 +20,10 @@ jobs:
           flutter-version: "3.38.4"
           channel: 'stable'
 
+      - name: Flutter clean
+        working-directory: ./vietmap_app
+        run: flutter clean
+
       - name: Get dependencies
         working-directory: ./vietmap_app
         run: flutter pub get
