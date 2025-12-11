@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "phases": ["phase1", "phase2", "phase3", "phase4", "phase5"],
+  "defaultPhase": "phase1",
+  "mode": "task",
+  "autoContinue": true,
+  "onConnectionLost": "save_and_resume",
+  "agent": {
+    "model": "gpt-4.1",
+    "temperature": 0.2
+  }
+}
+

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "cam_001",
+    "name": "Camera phạt nguội A",
+    "lat": 10.762622,
+    "lng": 106.660172,
+    "speedLimit": 50
+  },
+  {
+    "id": "cam_002",
+    "name": "Camera phạt nguội B",
+    "lat": 10.771123,
+    "lng": 106.653789,
+    "speedLimit": 60
+  }
+]
+

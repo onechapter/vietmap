@@ -1,0 +1,8 @@
+{"tile":[9.8,106.0,10.3,106.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:02:48.135955"}
+{"tile":[9.3,105.0,9.8,105.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:03:46.232883"}
+{"tile":[11.3,105.0,11.8,105.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:04:48.323749"}
+{"tile":[10.3,106.0,10.8,106.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:06:00.011814"}
+{"tile":[10.8,106.0,11.3,106.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:06:36.237787"}
+{"tile":[8.8,106.0,9.3,106.5],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:09:45.155780"}
+{"tile":[9.3,106.5,9.8,107.0],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:10:21.242252"}
+{"tile":[10.8,104.5,11.3,105.0],"error":"FormatException: Overpass returned non-JSON content-type: text/html","time":"2025-12-10T19:11:54.094811"}

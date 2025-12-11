@@ -1,0 +1,5 @@
+[
+  { "id": 1, "name": "QL1 - Đoạn 1", "lat": 10.78, "lng": 106.68, "radius_m": 400, "speed_limit": 60 },
+  { "id": 2, "name": "Khu dân cư A", "lat": 10.77, "lng": 106.70, "radius_m": 300, "speed_limit": 40 }
+]
+

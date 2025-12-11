@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+**/build/
+**/.dart_tool/
+**/pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# Flutter
+**/ios/Pods/
+**/ios/.symlinks/
+**/android/.gradle/
+**/android/app/build/
+
+# Data sources (large files)
+data_sources/**/*.json
+!data_sources/**/README.md
+
+# Temporary
+*.tmp
+*.temp
+
