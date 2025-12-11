@@ -1,0 +1,28 @@
+{
+  "danger_zone": {
+    "color": "#FF3B30",
+    "opacity": 0.6,
+    "type": "fill",
+    "stroke_color": "#FF0000",
+    "stroke_width": 1
+  },
+  "railway": {
+    "color": "#007AFF",
+    "width": 2,
+    "type": "line",
+    "opacity": 0.8
+  },
+  "cameras": {
+    "icon": "camera",
+    "type": "symbol",
+    "icon_size": 1.2,
+    "color": "#FF0000"
+  },
+  "speed_limit": {
+    "icon": "speed",
+    "type": "symbol",
+    "icon_size": 1.0,
+    "color": "#FFA500"
+  }
+}
+

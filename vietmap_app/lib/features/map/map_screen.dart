@@ -19,6 +19,11 @@ import '../../data/rules/rule_repository.dart';
 import '../../ui/hud/speedometer.dart';
 import '../../ui/hud/speed_limit_sign.dart';
 import '../../ui/widgets/camera_bottom_sheet.dart';
+import '../../ui/widgets/warning_banner.dart';
+import '../../features/warning/warning_model.dart';
+import '../../config/map_layers_loader.dart';
+import 'map_service.dart';
+import 'map_screen_controller.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -56,20 +61,67 @@ class _MapScreenState extends State<MapScreen> {
   final Map<String, DateTime> _speedCooldown = {};
   final Map<String, DateTime> _dangerCooldown = {};
   final Map<String, DateTime> _railCooldown = {};
+  final MapService _mapService = MapService.instance;
+  final MapLayersLoader _layersLoader = MapLayersLoader.instance;
+  bool _hasVectorTiles = false;
+  late final MapScreenController _controller;
+  StreamSubscription? _warningStreamSub;
+  Warning? _currentWarning;
 
   @override
   void initState() {
     super.initState();
+    _controller = MapScreenController();
     _initTts();
+    _initMapService();
+    _initController();
     _loadCameras();
     _loadRules();
     _initLocationTracking();
+  }
+
+  Future<void> _initController() async {
+    await _controller.init();
+    _warningStreamSub = _controller.warningStream.listen((warning) {
+      if (mounted) {
+        setState(() {
+          _currentWarning = warning;
+        });
+      }
+    });
+    // Start warning engine when map is ready
+    await _controller.startWarningEngine();
+  }
+
+  Future<void> _initMapService() async {
+    try {
+      await _mapService.init();
+      await _layersLoader.load();
+      if (mounted) {
+        setState(() {
+          _hasVectorTiles = _mapService.hasMbtiles();
+        });
+      }
+      _log('MapService initialized: hasMbtiles=${_mapService.hasMbtiles()}');
+      if (_mapService.hasMbtiles()) {
+        _log('MBTiles available: ${_mapService.getMbtilesPath()}');
+        _log('Tile URL template: ${_mapService.getTileUrlTemplate()}');
+      }
+    } catch (e) {
+      _log('MapService init failed: $e');
+    }
   }
 
   @override
   void dispose() {
     try {
       _positionSub?.cancel();
+    } catch (_) {}
+    try {
+      _warningStreamSub?.cancel();
+    } catch (_) {}
+    try {
+      _controller.dispose();
     } catch (_) {}
     try {
       _mapController.dispose();
@@ -412,6 +464,14 @@ class _MapScreenState extends State<MapScreen> {
     return inside;
   }
 
+  Color _parseColor(String hex) {
+    try {
+      return Color(int.parse(hex.replaceAll('#', ''), radix: 16) + 0xFF000000);
+    } catch (e) {
+      return Colors.red;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final markers = <Marker>[];
@@ -448,6 +508,16 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     final polygons = <Polygon>[];
+    final dangerStyle = _layersLoader.getStyle('danger_zone');
+    final dangerColor = dangerStyle != null
+        ? _parseColor(dangerStyle.color)
+        : Colors.red;
+    final dangerOpacity = dangerStyle?.opacity ?? 0.6;
+    final dangerStrokeColor = (dangerStyle?.strokeColor != null)
+        ? _parseColor(dangerStyle!.strokeColor!)
+        : Colors.red;
+    final dangerStrokeWidth = dangerStyle?.strokeWidth ?? 1.0;
+
     for (final rule in _dangerGrid.queryNeighborhood(
       _currentLatLng?.latitude ?? 0,
       _currentLatLng?.longitude ?? 0,
@@ -456,9 +526,9 @@ class _MapScreenState extends State<MapScreen> {
         polygons.add(
           Polygon(
             points: rule.polygon,
-            color: Colors.red.withOpacity(0.15),
-            borderStrokeWidth: 2,
-            borderColor: Colors.red,
+            color: dangerColor.withOpacity(dangerOpacity),
+            borderStrokeWidth: dangerStrokeWidth,
+            borderColor: dangerStrokeColor,
           ),
         );
       } else if (rule.radiusM > 0 && _currentLatLng != null) {
@@ -475,14 +545,18 @@ class _MapScreenState extends State<MapScreen> {
         polygons.add(
           Polygon(
             points: circle,
-            color: Colors.red.withOpacity(0.15),
-            borderStrokeWidth: 2,
-            borderColor: Colors.red,
+            color: dangerColor.withOpacity(dangerOpacity),
+            borderStrokeWidth: dangerStrokeWidth,
+            borderColor: dangerStrokeColor,
           ),
         );
       }
     }
 
+    final railwayStyle = _layersLoader.getStyle('railway');
+    final railwayColor = railwayStyle != null
+        ? _parseColor(railwayStyle.color)
+        : Colors.blue;
     final railwayMarkers = _railwayGrid
         .queryNeighborhood(_currentLatLng?.latitude ?? 0, _currentLatLng?.longitude ?? 0)
         .map(
@@ -491,9 +565,9 @@ class _MapScreenState extends State<MapScreen> {
             height: 36,
             point: r.point,
             child: Column(
-              children: const [
-                Icon(Icons.warning_amber, color: Colors.orange, size: 28),
-                Icon(Icons.horizontal_rule, size: 12, color: Colors.black54),
+              children: [
+                Icon(Icons.warning_amber, color: railwayColor, size: 28),
+                const Icon(Icons.horizontal_rule, size: 12, color: Colors.black54),
               ],
             ),
           ),
@@ -502,7 +576,14 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bản đồ OSM'),
+        title: Text(_hasVectorTiles ? 'Bản đồ Vector Tiles' : 'Bản đồ OSM'),
+        actions: [
+          if (_hasVectorTiles)
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.layers, color: Colors.green),
+            ),
+        ],
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -587,6 +668,21 @@ class _MapScreenState extends State<MapScreen> {
                               style: const TextStyle(color: Colors.red),
                             ),
                           ),
+                        ),
+                      ),
+                    if (_currentWarning != null)
+                      Positioned(
+                        top: _cameraError != null ? 80 : 12,
+                        left: 12,
+                        right: 12,
+                        child: WarningBanner(
+                          warning: _currentWarning!,
+                          onDismiss: () {
+                            setState(() {
+                              _currentWarning = null;
+                            });
+                            _controller.dismissWarning();
+                          },
                         ),
                       ),
                   ],

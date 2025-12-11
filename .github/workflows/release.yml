@@ -1,0 +1,58 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
+          channel: 'stable'
+
+      - name: Get dependencies
+        working-directory: ./vietmap_app
+        run: flutter pub get
+
+      - name: Run tests
+        working-directory: ./vietmap_app
+        run: flutter test
+
+      - name: Analyze code
+        working-directory: ./vietmap_app
+        run: flutter analyze
+
+      - name: Build APK
+        working-directory: ./vietmap_app
+        run: flutter build apk --release --split-per-abi
+
+      - name: Build App Bundle
+        working-directory: ./vietmap_app
+        run: flutter build appbundle --release
+
+      - name: Analyze APK size
+        working-directory: ./vietmap_app
+        run: flutter build apk --release --analyze-size
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: vietmap_app/build/app/outputs/flutter-apk/*.apk
+
+      - name: Upload AAB artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-aab
+          path: vietmap_app/build/app/outputs/bundle/release/app-release.aab
+

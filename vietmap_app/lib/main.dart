@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:vietmap_app/features/map/map_screen.dart';
+import 'package:vietmap_app/logging/log_cleaner.dart';
+import 'package:vietmap_app/logging/field_logger.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Clean old logs on startup
+  await LogCleaner.cleanOldLogs();
+  
+  // Initialize field logger
+  await FieldLogger.instance.init();
+  
   runApp(const MyApp());
 }
 

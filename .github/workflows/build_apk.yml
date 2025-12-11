@@ -1,0 +1,84 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+      - 'beta/**'
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+
+      - name: Flutter pub get
+        working-directory: vietmap_app
+        run: flutter pub get
+
+      - name: Flutter analyze
+        working-directory: vietmap_app
+        run: flutter analyze
+
+      - name: Run tests
+        working-directory: vietmap_app
+        run: flutter test --machine || true  # Continue even if tests fail
+
+      - name: Build APK (release)
+        working-directory: vietmap_app
+        run: flutter build apk --release --split-per-abi
+
+      - name: Verify APK size (<80MB)
+        working-directory: vietmap_app
+        run: |
+          FILE=build/app/outputs/flutter-apk/app-release.apk
+          if [ ! -f "$FILE" ]; then
+            # Try arm64-v8a if split-per-abi was used
+            FILE=build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+          fi
+          
+          if [ ! -f "$FILE" ]; then
+            echo "❌ APK file not found"
+            exit 1
+          fi
+          
+          SIZE=$(stat -c%s "$FILE")
+          LIMIT=$((80 * 1024 * 1024))
+          SIZE_MB=$((SIZE / 1024 / 1024))
+          
+          if [ "$SIZE" -gt "$LIMIT" ]; then
+            echo "❌ APK too large: ${SIZE_MB}MB (${SIZE} bytes, limit: 80MB)"
+            exit 1
+          fi
+          echo "✅ APK size OK: ${SIZE_MB}MB (${SIZE} bytes)"
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: App-Release-APK
+          path: |
+            vietmap_app/build/app/outputs/flutter-apk/app-release.apk
+            vietmap_app/build/app/outputs/flutter-apk/app-*-release.apk
+          retention-days: 30
+
+      - name: Upload APK Summary
+        if: always()
+        run: |
+          echo "## Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **APK**: Available in artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+

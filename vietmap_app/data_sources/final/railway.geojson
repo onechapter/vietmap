@@ -1,0 +1,5815 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8577548,
+          10.4056381
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5082497,
+          10.6166854
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5105296,
+          10.6188455
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5212156,
+          10.6289737
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.525451,
+          10.6330318
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.535851,
+          10.642935
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5437903,
+          10.6509226
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.545397,
+          10.6532017
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5456421,
+          10.6535411
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5542153,
+          10.6657646
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.561607,
+          10.6755107
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.561752,
+          10.6756801
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5683296,
+          10.6843855
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5872554,
+          10.7093594
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.5958358,
+          10.7207154
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8483276,
+          10.7536918
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6311661,
+          10.7629509
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6328091,
+          10.7646176
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6338319,
+          10.7656552
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6346615,
+          10.7664968
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6356891,
+          10.7675979
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6527378,
+          10.784904
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.671173,
+          10.7852328
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6712402,
+          10.7853333
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6539913,
+          10.786123
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6707395,
+          10.7876653
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6708147,
+          10.7881375
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6662239,
+          10.788544
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6662495,
+          10.7885631
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6662741,
+          10.788584
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6664187,
+          10.7888131
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6664379,
+          10.7889243
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.656897,
+          10.7890724
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6714225,
+          10.790324
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6720279,
+          10.7915107
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6722288,
+          10.7918895
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6601855,
+          10.792502
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6733317,
+          10.7941018
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6743953,
+          10.7962352
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.674443,
+          10.7963277
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6751138,
+          10.7976416
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6756197,
+          10.79859
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6760677,
+          10.799457
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6761053,
+          10.7995289
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6767368,
+          10.8008101
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.677603,
+          10.8025171
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.678764,
+          10.8046724
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6800908,
+          10.8070609
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.680913,
+          10.8085715
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.68238,
+          10.8112645
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6832613,
+          10.8128464
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6824065,
+          10.8149992
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6857818,
+          10.8174891
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6858683,
+          10.8176437
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6860142,
+          10.8179046
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6861336,
+          10.8181181
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.6871415,
+          10.8196545
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.701728,
+          10.824001
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7033222,
+          10.8243772
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7033928,
+          10.8243939
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7142086,
+          10.8270102
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7143796,
+          10.827048
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.722225,
+          10.8294194
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7269807,
+          10.8331974
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7325841,
+          10.8377644
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7451211,
+          10.8434465
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7467452,
+          10.8462574
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7469089,
+          10.8465457
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7480155,
+          10.8484144
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7511271,
+          10.8537294
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7511451,
+          10.8537727
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7040128,
+          10.8553817
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7051784,
+          10.8586739
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.751932,
+          10.867363
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7521289,
+          10.8754695
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7521587,
+          10.8754803
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7553983,
+          10.8862278
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7553613,
+          10.8862432
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7550153,
+          10.8863874
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7571176,
+          10.8907573
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.3079244,
+          10.8937579
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7592271,
+          10.8951561
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7592702,
+          10.8952474
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.763052,
+          10.9001718
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7220576,
+          10.9052116
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7681611,
+          10.9064439
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7681288,
+          10.9064666
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7681894,
+          10.9064793
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7681562,
+          10.9065025
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7664047,
+          10.907815
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7687146,
+          10.9078236
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7637941,
+          10.9078816
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7616305,
+          10.9079368
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7587893,
+          10.9080093
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7474338,
+          10.9080804
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7563991,
+          10.9084428
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7553665,
+          10.9090991
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7536099,
+          10.909241
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7705088,
+          10.9093274
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7524539,
+          10.9096599
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7506763,
+          10.9099811
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7241591,
+          10.9110412
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7250861,
+          10.9135551
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7744706,
+          10.9142029
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.776259,
+          10.9163886
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7266318,
+          10.9178786
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7817575,
+          10.9205374
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7288747,
+          10.9240229
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.809596,
+          10.9244499
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.7993566,
+          10.9249214
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1851686,
+          10.9252965
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8120852,
+          10.9253216
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1817361,
+          10.9258397
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8138459,
+          10.9259851
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1916603,
+          10.9260043
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1202925,
+          10.926391
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.103328,
+          10.9277449
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1973395,
+          10.9278121
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2001952,
+          10.9286617
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8214991,
+          10.9288561
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0923407,
+          10.9288854
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2013085,
+          10.929068
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2023336,
+          10.9293685
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2024319,
+          10.9293812
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2037818,
+          10.9297323
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.173875,
+          10.9299108
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0874133,
+          10.9299544
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2091362,
+          10.9300157
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2136309,
+          10.9303485
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1333694,
+          10.9306884
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0854501,
+          10.9308092
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1485335,
+          10.9309714
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1401503,
+          10.9310065
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1377017,
+          10.9310302
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1383913,
+          10.931031
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.1380928,
+          10.9310325
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2307226,
+          10.9321102
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0685645,
+          10.9321437
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0798524,
+          10.9332387
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2434133,
+          10.9334871
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0727741,
+          10.9334927
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0551649,
+          10.9337027
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0737647,
+          10.9339599
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0754166,
+          10.9343151
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.299331,
+          10.9343363
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2528342,
+          10.93446
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2529256,
+          10.9344694
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.2598203,
+          10.9351791
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0504323,
+          10.9354062
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0481374,
+          10.935826
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7334858,
+          10.9367316
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.042882,
+          10.9367594
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8266192,
+          10.9372134
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.96662,
+          10.9397934
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8265928,
+          10.9401087
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9725427,
+          10.9402448
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.021513,
+          10.9407521
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0189381,
+          10.9412595
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9811237,
+          10.9419534
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9615096,
+          10.9421349
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9827827,
+          10.9422557
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.445172,
+          10.9423203
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0125403,
+          10.942426
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9839122,
+          10.942479
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3099458,
+          10.9425185
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0078146,
+          10.9432757
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0074693,
+          10.9433384
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9883521,
+          10.9433539
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9892015,
+          10.9435178
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0052423,
+          10.9437387
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9909252,
+          10.943861
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0040621,
+          10.9439556
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.0022029,
+          10.9443161
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3121319,
+          10.9444386
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4385853,
+          10.9448779
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9964461,
+          10.944962
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.826512,
+          10.9467941
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9523127,
+          10.9474562
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4218527,
+          10.9488076
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4193702,
+          10.9508496
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3231127,
+          10.9515314
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8270921,
+          10.9536529
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3305365,
+          10.9546467
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4630646,
+          10.9551286
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8287967,
+          10.9553488
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3349365,
+          10.9564878
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.939781,
+          10.9569543
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9391663,
+          10.95729
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8320409,
+          10.9577188
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3394876,
+          10.9583961
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9045287,
+          10.9584825
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3409974,
+          10.9590141
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.342244,
+          10.9595211
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9345125,
+          10.9597918
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3433801,
+          10.9598751
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3440406,
+          10.9600809
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.347717,
+          10.9612266
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9105303,
+          10.961333
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.838102,
+          10.9615228
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.407261,
+          10.9616626
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8434775,
+          10.9619827
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8496576,
+          10.9623659
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4797272,
+          10.9632415
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8546828,
+          10.9632699
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8547904,
+          10.9632917
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4045888,
+          10.9634236
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9234813,
+          10.9637009
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4039671,
+          10.9638106
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3563955,
+          10.9639407
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4822368,
+          10.9644678
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4029162,
+          10.9644693
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.8684816,
+          10.9647625
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4023894,
+          10.9647965
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4834068,
+          10.965122
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4012456,
+          10.9655267
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3652835,
+          10.9664988
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4886579,
+          10.9679619
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4886385,
+          10.9680248
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3969442,
+          10.9682228
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.498208,
+          10.9684727
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4970833,
+          10.9686477
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3737292,
+          10.9688871
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.4951683,
+          10.9689537
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3935803,
+          10.9703124
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3821064,
+          10.9704181
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3825596,
+          10.9704276
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3851963,
+          10.9704832
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3866028,
+          10.9705355
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3868796,
+          10.9705458
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3880033,
+          10.9705878
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3900404,
+          10.9706495
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3904199,
+          10.9706593
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.3920568,
+          10.9706722
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7487611,
+          10.9788724
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7504927,
+          10.9962793
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7516002,
+          11.0117745
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7521482,
+          11.0194911
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7525228,
+          11.0244801
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7529052,
+          11.0296678
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7536236,
+          11.0394127
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7549461,
+          11.0580828
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7556585,
+          11.0680116
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.75577,
+          11.0696307
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7574156,
+          11.092192
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.758026,
+          11.1009381
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7587577,
+          11.1107542
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.759006,
+          11.1141879
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7595971,
+          11.1223636
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.76073,
+          11.13889
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7612711,
+          11.1465601
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7622009,
+          11.1593212
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7629471,
+          11.1697433
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7640537,
+          11.1851587
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7649094,
+          11.1968013
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7655907,
+          11.2064527
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7670632,
+          11.2267544
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7679843,
+          11.2393439
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7687215,
+          11.2497818
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7702929,
+          11.2702498
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.76616,
+          11.2916708
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7647478,
+          11.3025635
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7709179,
+          11.3287574
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7748655,
+          11.3495108
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7750702,
+          11.3544688
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7754939,
+          11.3648946
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7768103,
+          11.3973665
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7768281,
+          11.397615
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7771284,
+          11.4047779
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7773433,
+          11.4097991
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7780168,
+          11.4258819
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7783276,
+          11.4333462
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7841198,
+          11.4678649
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7891724,
+          11.4880683
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7896308,
+          11.4898447
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.791547,
+          11.4975166
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7923404,
+          11.50067
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7957937,
+          11.5144516
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7962948,
+          11.5164813
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7965154,
+          11.5174054
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7972455,
+          11.5202669
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7990813,
+          11.5274494
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7991492,
+          11.5277131
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8002908,
+          11.5325417
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8039049,
+          11.5467528
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8054532,
+          11.5501657
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8052749,
+          11.5501967
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8051991,
+          11.5502099
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8087005,
+          11.5559196
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8087497,
+          11.5559909
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8088272,
+          11.5560715
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8097856,
+          11.5571914
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7858311,
+          11.563436
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7858271,
+          11.5634561
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7858169,
+          11.5635063
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7940214,
+          11.5639555
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8168609,
+          11.5641821
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7797832,
+          11.564195
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7977213,
+          11.5645245
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7757447,
+          11.5646551
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7688815,
+          11.5654643
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.768428,
+          11.5655509
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8518409,
+          11.5658168
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8509305,
+          11.5658172
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8512158,
+          11.5658187
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8514732,
+          11.56582
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8252614,
+          11.5658232
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8505103,
+          11.5658304
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8502156,
+          11.5658378
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8496983,
+          11.5658507
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.852656,
+          11.56586
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8492831,
+          11.5658611
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8481848,
+          11.5658886
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8475337,
+          11.5659049
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8530144,
+          11.5659062
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8532283,
+          11.5659332
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8420948,
+          11.5660373
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8070638,
+          11.5660636
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8412715,
+          11.5660642
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8071582,
+          11.5660783
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8382039,
+          11.5661354
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.835823,
+          11.5661874
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.855659,
+          11.5662287
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8330052,
+          11.5662517
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.825229,
+          11.5664211
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8577974,
+          11.5665096
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8582176,
+          11.5665607
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8586515,
+          11.5666172
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8109171,
+          11.5666347
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.814867,
+          11.5666804
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8593613,
+          11.5667052
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8131796,
+          11.5667206
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8633888,
+          11.5672148
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8637713,
+          11.5672631
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8660488,
+          11.5675504
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8669055,
+          11.5676584
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.867066,
+          11.5676787
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8672329,
+          11.5676997
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8674569,
+          11.567728
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8681482,
+          11.5678152
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8686437,
+          11.5678777
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8693325,
+          11.5679646
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8707624,
+          11.5681449
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8708638,
+          11.5681577
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8721104,
+          11.568315
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8724851,
+          11.5683622
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.762409,
+          11.5683647
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8728766,
+          11.5684116
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8729585,
+          11.5684219
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8745485,
+          11.5686225
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8750362,
+          11.568684
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8759416,
+          11.5687982
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8761884,
+          11.5688294
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8776564,
+          11.5690062
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8880016,
+          11.5703194
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8881048,
+          11.5703323
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8882242,
+          11.5703448
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.8984833,
+          11.5716416
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9106445,
+          11.5717635
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.89945,
+          11.5717642
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9105335,
+          11.5717665
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9106406,
+          11.5718115
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9105296,
+          11.5718154
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9164363,
+          11.5720309
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9044689,
+          11.5721751
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.9167203,
+          11.5722245
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7582394,
+          11.5738055
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7578604,
+          11.5744906
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7542523,
+          11.5809957
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7496209,
+          11.5940444
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7483362,
+          11.5971696
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7476007,
+          11.5988756
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7456243,
+          11.603495
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7396176,
+          11.6175256
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7353589,
+          11.6265513
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7288183,
+          11.6410767
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7270188,
+          11.6449899
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7245842,
+          11.648625
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7189246,
+          11.6549449
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7161018,
+          11.6589688
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7127758,
+          11.6642255
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7100567,
+          11.6693651
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.707044,
+          11.6750598
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7046269,
+          11.679612
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7046106,
+          11.6796428
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7026972,
+          11.683124
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7027818,
+          11.6831467
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.702491,
+          11.6835363
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7025592,
+          11.6835685
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7020001,
+          11.6845041
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.702065,
+          11.6845274
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7014723,
+          11.6855963
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7012493,
+          11.6860224
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7002326,
+          11.6879398
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6983048,
+          11.6915504
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6956179,
+          11.6966787
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6885321,
+          11.7100873
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6879886,
+          11.7111157
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6865352,
+          11.713866
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6853991,
+          11.7160158
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6829736,
+          11.7210067
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6813241,
+          11.7246287
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6800084,
+          11.72752
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6790643,
+          11.7295947
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6782847,
+          11.731308
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6779515,
+          11.7320401
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6775557,
+          11.7329099
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.674721,
+          11.7391183
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6723404,
+          11.7445078
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6673807,
+          11.7552491
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6642094,
+          11.7622309
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.657819,
+          11.7755262
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6537648,
+          11.7833453
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6497817,
+          11.7910271
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.647694,
+          11.7950323
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.6458101,
+          11.7986871
+        ]
+      },
+      "properties": {
+        "type": "level_crossing",
+        "is_crossing": true
+      }
+    }
+  ]
+}

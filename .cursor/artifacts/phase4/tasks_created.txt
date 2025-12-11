@@ -1,0 +1,30 @@
+﻿Phase 4 Task Files Created:
+============================
+
+1. phase4_map_integration.md
+   - Map integration với vector tiles
+   - Load và hiển thị MBTiles layers
+   - Tích hợp MapLibre/Flutter Map
+
+2. phase4_warning_engine.md
+   - Warning engine dựa trên vector tiles
+   - Query features từ tiles
+   - Proximity checking và TTS warnings
+
+3. phase4_repository.md
+   - Repository pattern cho vector tiles
+   - MBTiles và JSON fallback support
+   - Caching và error handling
+
+4. phase4_ui.md
+   - UI enhancements với vector tiles
+   - Feature info bottom sheet
+   - Layer toggle và interactive features
+
+5. phase4_background.md
+   - Background service integration
+   - Warnings trong background mode
+   - Battery optimization
+
+Total: 5 task files
+Created: 2025-12-11

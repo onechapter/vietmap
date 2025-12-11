@@ -32,5 +32,9 @@ class GridIndex<T> {
   }
 
   int bucketCount() => _buckets.length;
+
+  void clear() {
+    _buckets.clear();
+  }
 }
 

@@ -1,0 +1,35 @@
+{
+  "generated_at": "2025-12-11",
+  "bbox": [
+    104.5035167,
+    8.9857102,
+    107.498208,
+    11.7986871
+  ],
+  "counts": {
+    "danger_zone": 4479,
+    "railway": 415,
+    "cameras": 0,
+    "speed_limit": 0
+  },
+  "pipeline_version": "2.5.1",
+  "files": {
+    "json": [
+      "cameras.json",
+      "railway.json",
+      "danger_zone.json"
+    ],
+    "minified": [
+      "cameras.min.json",
+      "railway.min.json",
+      "danger_zone.min.json",
+      "speed_limit.min.json"
+    ],
+    "geojson": [
+      "cameras.geojson",
+      "railway.geojson",
+      "danger_zone.geojson",
+      "speed_limit.geojson"
+    ]
+  }
+}
