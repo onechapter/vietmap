@@ -336,9 +336,31 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
             else if (_routeError != null)
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  _routeError!,
-                  style: const TextStyle(color: Colors.red),
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: _routeError!.contains('mock') ? Colors.orange.shade100 : Colors.red.shade100,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        _routeError!.contains('mock') ? Icons.warning_amber : Icons.error,
+                        color: _routeError!.contains('mock') ? Colors.orange : Colors.red,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          _routeError!,
+                          style: TextStyle(
+                            color: _routeError!.contains('mock') ? Colors.orange.shade900 : Colors.red.shade900,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             Row(

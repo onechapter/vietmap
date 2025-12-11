@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import '../../core/logger.dart';
 import '../../features/navigation/route_engine.dart';
+import '../../features/navigation/models/route_model.dart';
 
 final routeSimulatorProvider =
     StateNotifierProvider<RouteSimulatorService, LatLng?>(
@@ -33,27 +34,46 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
 
     // Lấy route thực tế từ RouteEngine
     appLog('RouteSimulator: Requesting route from ${start.latitude},${start.longitude} to ${end.latitude},${end.longitude}');
-    final route = await RouteEngine.instance.requestRoute(
+    RouteModel? route = await RouteEngine.instance.requestRoute(
       from: start,
       to: end,
       useCache: true,
     );
 
+    // Nếu không lấy được route từ API, tạo route mock (đường thẳng chia nhỏ)
     if (route == null || route.geometry.isEmpty) {
-      _error = 'Không thể lấy route từ API';
-      appLog('RouteSimulator: Failed to get route');
-      return;
+      appLog('RouteSimulator: API failed, using mock route (straight line)');
+      _routePoints = _createMockRoute(start, end);
+      _error = 'Đang dùng route mock (API không khả dụng)';
+    } else {
+      _routePoints = route.geometry;
+      appLog('RouteSimulator: Route loaded with ${_routePoints!.length} points, distance: ${route.distance.toStringAsFixed(0)}m');
     }
 
-    _routePoints = route.geometry;
     _currentPointIndex = 0;
     state = _routePoints!.first;
     running = true;
 
-    appLog('RouteSimulator: Route loaded with ${_routePoints!.length} points, distance: ${route.distance.toStringAsFixed(0)}m');
-
     // Tick mỗi giây
     _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
+  }
+
+  /// Tạo route mock (đường thẳng chia thành nhiều điểm)
+  List<LatLng> _createMockRoute(LatLng start, LatLng end) {
+    final distance = _distance.as(LengthUnit.Meter, start, end);
+    // Tạo khoảng 1 điểm mỗi 10 mét
+    final numPoints = (distance / 10).ceil().clamp(10, 200);
+    final points = <LatLng>[];
+    
+    for (int i = 0; i <= numPoints; i++) {
+      final t = i / numPoints;
+      final lat = start.latitude + (end.latitude - start.latitude) * t;
+      final lng = start.longitude + (end.longitude - start.longitude) * t;
+      points.add(LatLng(lat, lng));
+    }
+    
+    appLog('RouteSimulator: Created mock route with ${points.length} points, distance: ${distance.toStringAsFixed(0)}m');
+    return points;
   }
 
   void _tick() {
