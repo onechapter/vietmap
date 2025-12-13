@@ -14,6 +14,10 @@ import '../../core/grid_index.dart';
 import '../../core/speed_smoother.dart';
 import '../../data/cameras/camera_model.dart';
 import '../../data/cameras/camera_repository.dart';
+import '../../data/repositories/camera_repository.dart' as NewCameraRepo;
+import '../../data/repositories/speed_limit_repository.dart';
+import '../../data/repositories/danger_zone_repository.dart';
+import '../../data/repositories/railway_repository.dart';
 import '../../data/rules/rule_models.dart';
 import '../../data/rules/rule_repository.dart';
 import '../../ui/hud/speedometer.dart';
@@ -727,14 +731,37 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         children: [
                           _hudMode
                               ? const SizedBox.shrink()
-                              : Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Text(
-                                      'cam:${_cameras.length} speed:${_speedRules.length} danger:${_dangerRules.length} rail:${_railwayRules.length}',
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                  ),
+                              : StreamBuilder<LocationData>(
+                                  stream: LocationController.instance.stream,
+                                  builder: (context, snapshot) {
+                                    // Query nearby features theo location hiện tại
+                                    int camCount = 0;
+                                    int speedCount = 0;
+                                    int dangerCount = 0;
+                                    int railCount = 0;
+                                    
+                                    if (snapshot.hasData) {
+                                      final loc = snapshot.data!;
+                                      final lat = loc.lat;
+                                      final lng = loc.lng;
+                                      
+                                      // Query nearby features với radius phù hợp (500m)
+                                      camCount = NewCameraRepo.CameraRepository.instance.queryNearby(lat, lng, 500).length;
+                                      speedCount = SpeedLimitRepository.instance.queryNearby(lat, lng, 500).length;
+                                      dangerCount = DangerZoneRepository.instance.queryNearby(lat, lng, 500).length;
+                                      railCount = RailwayRepository.instance.queryNearby(lat, lng, 500).length;
+                                    }
+                                    
+                                    return Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6),
+                                        child: Text(
+                                          'cam:$camCount speed:$speedCount danger:$dangerCount rail:$railCount',
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                           const SizedBox(height: 8),
                           Row(
