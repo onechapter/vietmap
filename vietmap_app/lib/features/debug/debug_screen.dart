@@ -472,27 +472,59 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // TASK DEBUG-04: Hiển thị source location rõ ràng
                 Row(
                   children: [
-                    const Text('Vị trí hiện tại', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Text('📍 Vị trí hiện tại', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const Spacer(),
                     Chip(
-                      label: Text(isSim ? 'SIM' : 'REAL'),
+                      label: Text(isSim ? 'SIMULATION' : 'REAL GPS'),
                       backgroundColor: isSim ? Colors.orange : Colors.green,
+                      labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 if (loc != null) ...[
-                  Text('Lat: ${loc.lat.toStringAsFixed(6)}'),
-                  Text('Lng: ${loc.lng.toStringAsFixed(6)}'),
-                  const SizedBox(height: 8),
-                  // TASK 7: Speed raw/smooth
-                  Text('Tốc độ RAW: ${loc.speed.toStringAsFixed(1)} km/h'),
-                  Text('Tốc độ SMOOTH: ${loc.speed.toStringAsFixed(1)} km/h', 
-                    style: const TextStyle(color: Colors.grey)),
+                  // TASK DEBUG-04: Hiển thị location chi tiết
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isSim ? Colors.orange.shade50 : Colors.green.shade50,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: isSim ? Colors.orange : Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Lat: ${loc.lat.toStringAsFixed(6)}', 
+                          style: const TextStyle(fontFamily: 'monospace', fontSize: 14)),
+                        Text('Lng: ${loc.lng.toStringAsFixed(6)}', 
+                          style: const TextStyle(fontFamily: 'monospace', fontSize: 14)),
+                        const SizedBox(height: 8),
+                        // TASK DEBUG-04: Speed raw/smooth
+                        Text('Tốc độ: ${loc.speed.toStringAsFixed(1)} km/h', 
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text('Source: ${isSim ? "SIMULATED" : "REAL GPS"}', 
+                          style: TextStyle(
+                            color: isSim ? Colors.orange.shade900 : Colors.green.shade900,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      ],
+                    ),
+                  ),
                 ] else
-                  const Text('Chưa có vị trí', style: TextStyle(color: Colors.grey)),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text('⏳ Chưa có vị trí', style: TextStyle(color: Colors.grey)),
+                  ),
               ],
             ),
           ),
@@ -508,20 +540,42 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Features xung quanh (TASK 4)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            // TASK DEBUG-04: Hiển thị rõ đây là features theo location đang dùng
+            Row(
+              children: [
+                const Text('🔍 Features xung quanh', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Spacer(),
+                StreamBuilder<LocationData>(
+                  stream: LocationController.instance.stream,
+                  builder: (context, snapshot) {
+                    final isSim = LocationController.instance.isSimulationMode;
+                    return Chip(
+                      label: Text(isSim ? 'SIM' : 'REAL'),
+                      backgroundColor: isSim ? Colors.orange : Colors.green,
+                      labelStyle: const TextStyle(fontSize: 10, color: Colors.white),
+                    );
+                  },
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             StreamBuilder<LocationData>(
               stream: LocationController.instance.stream,
               builder: (context, snapshot) {
                 final loc = snapshot.data;
+                final isSim = LocationController.instance.isSimulationMode;
+                
                 if (loc == null) {
-                  return const Text('Chưa có vị trí');
+                  return const Text('⏳ Chưa có vị trí');
                 }
 
                 final lat = loc.lat;
                 final lng = loc.lng;
                 final radius = 500.0;
                 final distance = const Distance();
+                
+                // TASK DEBUG-04: Log rõ location source đang dùng để query
+                appLog('[DebugScreen] Querying nearby features: source=${isSim ? "SIM" : "REAL"}, lat=$lat, lng=$lng');
 
                 // Query nearby features
                 final cameras = CameraRepository.instance.queryNearby(lat, lng, radius);

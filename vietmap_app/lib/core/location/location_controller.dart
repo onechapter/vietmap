@@ -99,6 +99,7 @@ class LocationController {
       _realGpsSubscription = Geolocator.getPositionStream(locationSettings: locationSettings)
           .listen(
         (position) {
+          // TASK DEBUG-02: 100% override - Only emit if NOT in simulation mode
           if (!_simulationMode) {
             final loc = LocationData(
               position.latitude,
@@ -106,6 +107,9 @@ class LocationController {
               position.speed * 3.6, // km/h
             );
             _emitLocation(loc);
+          } else {
+            // TASK DEBUG-02: Log when GPS tries to emit but simulation is active
+            appLog('[LocationController] ⛔ GPS position IGNORED (simulation mode active): ${position.latitude}, ${position.longitude}');
           }
         },
         onError: (e) {
@@ -147,16 +151,25 @@ class LocationController {
     double speed = 0.0, // m/s
     double accuracy = 5.0,
   }) {
+    // TASK DEBUG-02: Ensure simulation mode is active when updating simulated location
+    if (!_simulationMode) {
+      appLog('[LocationController] ⚠️ WARNING: updateLocation called but simulation mode is OFF. Enabling simulation mode...');
+      enableSimulationMode();
+    }
+    
     final speedKmh = speed * 3.6; // Convert to km/h
     final loc = LocationData(latitude, longitude, speedKmh);
     
-    appLog('[FAKE-LOC] $latitude,$longitude | speed=$speedKmh');
+    appLog('[LocationController] [SIM] updateLocation: $latitude,$longitude | speed=$speedKmh km/h');
     _emitLocation(loc);
   }
 
   /// Emit location to stream
   void _emitLocation(LocationData location) {
     _lastLocation = location;
+    // TASK DEBUG-02: Log source clearly (REAL/SIM)
+    final source = _simulationMode ? 'SIM' : 'REAL';
+    appLog('[LocationController] Emitting location: source=$source, lat=${location.lat.toStringAsFixed(6)}, lng=${location.lng.toStringAsFixed(6)}, speed=${location.speed.toStringAsFixed(1)} km/h');
     _stream.add(location);
   }
 

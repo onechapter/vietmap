@@ -54,10 +54,12 @@ class WarningEngine {
       appLog('WarningEngine: Adaptive frequency active');
     }
 
-    // Use unified LocationController positionStream (converts LocationData to Position)
+    // TASK DEBUG-03: Use unified LocationController positionStream (converts LocationData to Position)
     _positionSub = LocationController.instance.positionStream.listen(
       (position) {
-        appLog('WarningEngine: Received location: ${position.latitude}, ${position.longitude}, speed=${(position.speed * 3.6).toStringAsFixed(1)} km/h');
+        // TASK DEBUG-03: Log source clearly
+        final source = LocationController.instance.isSimulationMode ? 'SIM' : 'REAL';
+        appLog('[WarningEngine] Received location: source=$source, lat=${position.latitude.toStringAsFixed(6)}, lng=${position.longitude.toStringAsFixed(6)}, speed=${(position.speed * 3.6).toStringAsFixed(1)} km/h');
         _processLocation(position);
       },
       onError: (e) {
@@ -65,7 +67,7 @@ class WarningEngine {
       },
     );
     
-    appLog('WarningEngine: Listening to unified LocationController positionStream');
+    appLog('WarningEngine: ✅ Listening to unified LocationController.positionStream (single source of truth)');
   }
 
   void stop() {
@@ -104,13 +106,15 @@ class WarningEngine {
     final lng = position.longitude;
     final speedMs = position.speed;
     final speedKmh = (speedMs * 3.6).clamp(0.0, 300.0);
+    final isSim = LocationController.instance.isSimulationMode;
     
     // Bypass EMA smoothing in simulation mode (TASK 2)
-    final filteredSpeed = LocationController.instance.isSimulationMode 
+    final filteredSpeed = isSim
         ? speedKmh  // Use raw speed in simulation
         : _smoother.update(speedKmh);  // Use smoothed speed in real GPS
 
-    appLog('WarningEngine: Processing location: $lat, $lng, speed=${speedKmh.toStringAsFixed(1)} km/h (filtered=${filteredSpeed.toStringAsFixed(1)} km/h, sim=${LocationController.instance.isSimulationMode})');
+    // TASK DEBUG-03: Log location source and processing details
+    appLog('[WarningEngine] Processing: source=${isSim ? "SIM" : "REAL"}, lat=$lat, lng=$lng, speed=${speedKmh.toStringAsFixed(1)} km/h (filtered=${filteredSpeed.toStringAsFixed(1)} km/h)');
 
     // Reset cooldown in simulation mode
     if (LocationController.instance.isSimulationMode) {

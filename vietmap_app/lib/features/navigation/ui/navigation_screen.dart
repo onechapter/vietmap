@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:geolocator/geolocator.dart';
 import '../../../core/logger.dart';
+import '../../../core/location/location_controller.dart';  // TASK DEBUG-01: Use unified LocationController
 import '../models/route_model.dart';
 import '../route_engine.dart';
 import 'widgets/maneuver_banner.dart';
@@ -82,17 +82,16 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   Future<void> _initLocationTracking() async {
     try {
-      final position = await Geolocator.getCurrentPosition();
-      setState(() {
-        _currentPosition = LatLng(position.latitude, position.longitude);
-      });
+      // TASK DEBUG-01: Use unified LocationController instead of direct Geolocator
+      final current = LocationController.instance.currentPosition;
+      if (current != null) {
+        setState(() {
+          _currentPosition = LatLng(current.latitude, current.longitude);
+        });
+      }
 
-      Geolocator.getPositionStream(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.high,
-          distanceFilter: 5,
-        ),
-      ).listen((position) {
+      // Listen to unified LocationController stream
+      LocationController.instance.positionStream.listen((position) {
         if (mounted) {
           setState(() {
             _currentPosition = LatLng(position.latitude, position.longitude);
