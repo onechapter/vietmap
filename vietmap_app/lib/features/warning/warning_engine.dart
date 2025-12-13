@@ -99,6 +99,10 @@ class WarningEngine {
     await SpeedLimitRepository.instance.load();
   }
 
+  // TASK DEBUG-06: Track last location to verify changes
+  double? _lastLat;
+  double? _lastLng;
+
   Future<void> _processLocation(Position position) async {
     if (!_running) return;
 
@@ -108,13 +112,23 @@ class WarningEngine {
     final speedKmh = (speedMs * 3.6).clamp(0.0, 300.0);
     final isSim = LocationController.instance.isSimulationMode;
     
+    // TASK DEBUG-06: Verify location actually changed
+    final locationChanged = _lastLat != lat || _lastLng != lng;
+    if (locationChanged) {
+      appLog('[WarningEngine] ✅ LOCATION CHANGED: lat=$lat (was ${_lastLat?.toStringAsFixed(6)}), lng=$lng (was ${_lastLng?.toStringAsFixed(6)})');
+      _lastLat = lat;
+      _lastLng = lng;
+    } else {
+      appLog('[WarningEngine] ⚠️ Location unchanged: lat=$lat, lng=$lng');
+    }
+    
     // Bypass EMA smoothing in simulation mode (TASK 2)
     final filteredSpeed = isSim
         ? speedKmh  // Use raw speed in simulation
         : _smoother.update(speedKmh);  // Use smoothed speed in real GPS
 
-    // TASK DEBUG-03: Log location source and processing details
-    appLog('[WarningEngine] Processing: source=${isSim ? "SIM" : "REAL"}, lat=$lat, lng=$lng, speed=${speedKmh.toStringAsFixed(1)} km/h (filtered=${filteredSpeed.toStringAsFixed(1)} km/h)');
+    // TASK DEBUG-06: Log location source and processing details with change status
+    appLog('[WarningEngine] Processing: source=${isSim ? "SIM" : "REAL"}, lat=$lat, lng=$lng, speed=${speedKmh.toStringAsFixed(1)} km/h (filtered=${filteredSpeed.toStringAsFixed(1)} km/h), changed=$locationChanged');
 
     // Reset cooldown in simulation mode
     if (LocationController.instance.isSimulationMode) {

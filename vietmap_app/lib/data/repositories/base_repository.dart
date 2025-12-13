@@ -73,9 +73,25 @@ abstract class BaseRepository<T> {
     }
   }
 
+  // TASK DEBUG-07: Track last query location to verify new queries
+  double? _lastQueryLat;
+  double? _lastQueryLng;
+
   /// Query nearby items within radius (with caching)
   List<T> queryNearby(double lat, double lng, double radiusMeters) {
     if (!_loaded) return [];
+
+    // TASK DEBUG-07: Verify location changed - always use fresh lat/lng
+    final locationChanged = _lastQueryLat != lat || _lastQueryLng != lng;
+    if (locationChanged) {
+      appLog('[BaseRepository] ✅ Query location CHANGED: lat=$lat (was ${_lastQueryLat?.toStringAsFixed(6)}), lng=$lng (was ${_lastQueryLng?.toStringAsFixed(6)})');
+      _lastQueryLat = lat;
+      _lastQueryLng = lng;
+    }
+
+    // TASK DEBUG-08: Log cell key
+    final cellKey = _gridKey(lat, lng);
+    appLog('[BaseRepository] Query: lat=$lat, lng=$lng, cell=$cellKey, radius=${radiusMeters.toStringAsFixed(0)}m');
 
     // Check grid cache
     if (EngineConfig.enableGridCache) {
@@ -100,7 +116,7 @@ abstract class BaseRepository<T> {
       }
 
       if (cacheValid && _gridCache.containsKey(cacheKey)) {
-        appLog('BaseRepository: Grid cache hit for $cacheKey');
+        appLog('[BaseRepository] ⚠️ Grid cache HIT for $cacheKey (${_gridCache[cacheKey]!.length} items)');
         return _gridCache[cacheKey]!;
       }
 
@@ -110,10 +126,13 @@ abstract class BaseRepository<T> {
       _lastCacheLng = lng;
     }
 
+    // TASK DEBUG-07: Always query fresh from grid index (no reuse of old results)
     // Query from grid index
     final candidates = _gridIndex.queryNeighborhood(lat, lng);
     final results = <T>[];
     final distance = const Distance();
+
+    appLog('[BaseRepository] Querying grid: ${candidates.length} candidates from cell $cellKey');
 
     for (final item in candidates) {
       final (itemLat, itemLng) = getLocation(item);
@@ -132,7 +151,9 @@ abstract class BaseRepository<T> {
     if (EngineConfig.enableGridCache) {
       final cacheKey = _gridKey(lat, lng);
       _gridCache[cacheKey] = results;
-      appLog('BaseRepository: Grid cache updated for $cacheKey (${results.length} items)');
+      appLog('[BaseRepository] ✅ Grid cache updated for $cacheKey (${results.length} items)');
+    } else {
+      appLog('[BaseRepository] ✅ Fresh query result: ${results.length} items (cache disabled)');
     }
 
     return results;

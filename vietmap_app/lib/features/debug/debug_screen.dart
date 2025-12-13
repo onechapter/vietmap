@@ -7,6 +7,7 @@ import '../../data/repositories/railway_repository.dart';
 import '../../data/repositories/camera_repository.dart';
 import '../../data/repositories/speed_limit_repository.dart';
 import '../../features/warning/warning_manager.dart';
+import '../../features/warning/warning_model.dart';  // TASK DEBUG-09: Import Warning type
 import '../../core/location/location_controller.dart';
 import '../../data/cooldown_db.dart';
 import '../../core/logger.dart';
@@ -160,21 +161,31 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
   }
 
   Widget _buildRepositoryInfo() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Thông tin dữ liệu', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text('Danger Zones: ${DangerZoneRepository.instance.count}'),
-            Text('Railway: ${RailwayRepository.instance.count}'),
-            Text('Cameras: ${CameraRepository.instance.count}'),
-            Text('Speed Limits: ${SpeedLimitRepository.instance.count}'),
-          ],
-        ),
-      ),
+    // TASK DEBUG-09: Make reactive - rebuild when repositories load
+    return StreamBuilder<LocationData>(
+      stream: LocationController.instance.stream,
+      builder: (context, snapshot) {
+        // Rebuild when location changes (repositories might be loading)
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('📊 Thông tin dữ liệu', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 8),
+                Text('Danger Zones: ${DangerZoneRepository.instance.count}'),
+                Text('Railway: ${RailwayRepository.instance.count}'),
+                Text('Cameras: ${CameraRepository.instance.count}'),
+                Text('Speed Limits: ${SpeedLimitRepository.instance.count}'),
+                const SizedBox(height: 8),
+                Text('Last update: ${DateTime.now().toString().substring(11, 19)}', 
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -453,26 +464,84 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
   }
 
   Widget _buildWarningHistory() {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Lịch sử cảnh báo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            if (_warningHistory.isEmpty)
-              const Text('Chưa có cảnh báo')
-            else
-              ..._warningHistory.take(20).map((w) => ListTile(
-                    title: Text('${w['type']} - ${w['id']}'),
-                    subtitle: Text('${w['distance']}m lúc ${w['time']}'),
-                    dense: true,
-                  )),
-          ],
-        ),
-      ),
+    // TASK DEBUG-09: Make reactive - use StreamBuilder from WarningManager
+    return StreamBuilder<Warning>(
+      stream: WarningManager.instance.stream,
+      builder: (context, snapshot) {
+        // Rebuild when new warning arrives
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text('📢 Lịch sử cảnh báo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Spacer(),
+                    Text('${_warningHistory.length}', 
+                      style: const TextStyle(fontSize: 14, color: Colors.grey)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (_warningHistory.isEmpty)
+                  const Text('⏳ Chưa có cảnh báo', style: TextStyle(color: Colors.grey))
+                else
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      itemCount: _warningHistory.length > 20 ? 20 : _warningHistory.length,
+                      itemBuilder: (context, index) {
+                        final w = _warningHistory[index];
+                        return ListTile(
+                          title: Text('${w['type']} - ${w['id']}'),
+                          subtitle: Text('${w['distance']}m lúc ${w['time']}'),
+                          dense: true,
+                          leading: Icon(
+                            _getWarningIcon(w['type']),
+                            size: 20,
+                            color: _getWarningColor(w['type']),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  IconData _getWarningIcon(String? type) {
+    switch (type) {
+      case 'camera':
+        return Icons.camera_alt;
+      case 'railway':
+        return Icons.train;
+      case 'danger':
+        return Icons.warning;
+      case 'speed':
+        return Icons.speed;
+      default:
+        return Icons.info;
+    }
+  }
+
+  Color _getWarningColor(String? type) {
+    switch (type) {
+      case 'camera':
+        return Colors.red;
+      case 'railway':
+        return Colors.orange;
+      case 'danger':
+        return Colors.deepOrange;
+      case 'speed':
+        return Colors.yellow.shade700;
+      default:
+        return Colors.blue;
+    }
   }
 
   Widget _buildCurrentLocationInfo() {
