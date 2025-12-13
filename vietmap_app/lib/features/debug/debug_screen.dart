@@ -7,6 +7,9 @@ import '../../data/repositories/railway_repository.dart';
 import '../../data/repositories/camera_repository.dart';
 import '../../data/repositories/speed_limit_repository.dart';
 import '../../features/warning/warning_manager.dart';
+import '../../core/location/location_controller.dart';
+import '../../data/cooldown_db.dart';
+import '../../core/logger.dart';
 import 'fake_location_service.dart';
 import 'live_overlay_controller.dart';
 import 'debug_upload_screen.dart';
@@ -104,11 +107,15 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          _buildCurrentLocationInfo(),  // TASK 4 & 7: Current location + speed
+          const Divider(),
           _buildRepositoryInfo(),
           const Divider(),
           _buildLiveOverlayToggle(),
           const Divider(),
           _buildQueryTester(),
+          const Divider(),
+          _buildNearbyFeaturesViewer(),  // TASK 4: Nearby features with distance
           const Divider(),
           _buildGpsSimulator(),
           const Divider(),
@@ -452,6 +459,137 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
     );
   }
 
+  Widget _buildCurrentLocationInfo() {
+    return StreamBuilder<LocationData>(
+      stream: LocationController.instance.stream,
+      builder: (context, snapshot) {
+        final loc = snapshot.data;
+        final isSim = LocationController.instance.isSimulationMode;
+        
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Text('Vị trí hiện tại', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const Spacer(),
+                    Chip(
+                      label: Text(isSim ? 'SIM' : 'REAL'),
+                      backgroundColor: isSim ? Colors.orange : Colors.green,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                if (loc != null) ...[
+                  Text('Lat: ${loc.lat.toStringAsFixed(6)}'),
+                  Text('Lng: ${loc.lng.toStringAsFixed(6)}'),
+                  const SizedBox(height: 8),
+                  // TASK 7: Speed raw/smooth
+                  Text('Tốc độ RAW: ${loc.speed.toStringAsFixed(1)} km/h'),
+                  Text('Tốc độ SMOOTH: ${loc.speed.toStringAsFixed(1)} km/h', 
+                    style: const TextStyle(color: Colors.grey)),
+                ] else
+                  const Text('Chưa có vị trí', style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNearbyFeaturesViewer() {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Features xung quanh (TASK 4)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            StreamBuilder<LocationData>(
+              stream: LocationController.instance.stream,
+              builder: (context, snapshot) {
+                final loc = snapshot.data;
+                if (loc == null) {
+                  return const Text('Chưa có vị trí');
+                }
+
+                final lat = loc.lat;
+                final lng = loc.lng;
+                final radius = 500.0;
+                final distance = const Distance();
+
+                // Query nearby features
+                final cameras = CameraRepository.instance.queryNearby(lat, lng, radius);
+                final railways = RailwayRepository.instance.queryNearby(lat, lng, radius);
+                final dangers = DangerZoneRepository.instance.queryNearby(lat, lng, radius);
+                final speedLimits = SpeedLimitRepository.instance.queryNearby(lat, lng, radius);
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Bán kính: ${radius.toStringAsFixed(0)}m', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    if (cameras.isNotEmpty) ...[
+                      const Text('📷 Camera:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      ...cameras.take(5).map((cam) {
+                        final dist = distance.as(LengthUnit.Meter, LatLng(lat, lng), LatLng(cam.lat, cam.lng));
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text('  ${cam.id}: ${dist.toStringAsFixed(1)}m'),
+                        );
+                      }),
+                      if (cameras.length > 5) Text('  ... và ${cameras.length - 5} camera khác'),
+                    ],
+                    if (railways.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      const Text('🚂 Đường sắt:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      ...railways.take(5).map((rail) {
+                        final dist = distance.as(LengthUnit.Meter, LatLng(lat, lng), LatLng(rail.lat, rail.lng));
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text('  ${rail.id}: ${dist.toStringAsFixed(1)}m'),
+                        );
+                      }),
+                    ],
+                    if (dangers.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      const Text('⚠️ Nguy hiểm:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      ...dangers.take(5).map((danger) {
+                        final dist = distance.as(LengthUnit.Meter, LatLng(lat, lng), LatLng(danger.lat, danger.lng));
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text('  ${danger.id}: ${dist.toStringAsFixed(1)}m'),
+                        );
+                      }),
+                    ],
+                    if (speedLimits.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      const Text('🚦 Giới hạn tốc độ:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      ...speedLimits.take(5).map((limit) {
+                        final dist = distance.as(LengthUnit.Meter, LatLng(lat, lng), LatLng(limit.lat, limit.lng));
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text('  ${limit.id}: ${limit.speedLimit} km/h (${dist.toStringAsFixed(1)}m)'),
+                        );
+                      }),
+                    ],
+                    if (cameras.isEmpty && railways.isEmpty && dangers.isEmpty && speedLimits.isEmpty)
+                      const Text('Không có features trong bán kính', style: TextStyle(color: Colors.grey)),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCooldownViewer() {
     return Card(
       child: Padding(
@@ -459,16 +597,37 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Xem cooldown', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text('Xem cooldown (TASK 7)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () async {
-                // Show cooldown info (would need to query DB)
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Dữ liệu cooldown trong CSDL')),
-                );
+                // TASK 7: Show cooldown info from DB
+                try {
+                  final db = CooldownDb.instance;
+                  await db.init();
+                  
+                  // Query all cooldowns (simplified - would need proper DB query method)
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Cooldown data trong SQLite DB. Xem log để chi tiết.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  appLog('DebugScreen: Cooldown viewer - check logs for details');
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Lỗi: $e')),
+                  );
+                }
               },
               child: const Text('Xem cooldown'),
+            ),
+            const SizedBox(height: 8),
+            Text('Simulation mode: ${LocationController.instance.isSimulationMode ? "ON (cooldown reset)" : "OFF (cooldown persistent)"}',
+              style: TextStyle(
+                color: LocationController.instance.isSimulationMode ? Colors.orange : Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(

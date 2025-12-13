@@ -104,9 +104,13 @@ class WarningEngine {
     final lng = position.longitude;
     final speedMs = position.speed;
     final speedKmh = (speedMs * 3.6).clamp(0.0, 300.0);
-    final filteredSpeed = _smoother.update(speedKmh);
+    
+    // Bypass EMA smoothing in simulation mode (TASK 2)
+    final filteredSpeed = LocationController.instance.isSimulationMode 
+        ? speedKmh  // Use raw speed in simulation
+        : _smoother.update(speedKmh);  // Use smoothed speed in real GPS
 
-    appLog('WarningEngine: Processing location: $lat, $lng, speed=${speedKmh.toStringAsFixed(1)} km/h');
+    appLog('WarningEngine: Processing location: $lat, $lng, speed=${speedKmh.toStringAsFixed(1)} km/h (filtered=${filteredSpeed.toStringAsFixed(1)} km/h, sim=${LocationController.instance.isSimulationMode})');
 
     // Reset cooldown in simulation mode
     if (LocationController.instance.isSimulationMode) {
@@ -135,7 +139,10 @@ class WarningEngine {
     
     final lat = location.latitude;
     final lng = location.longitude;
-    final filteredSpeed = speedKmh > 0 ? _smoother.update(speedKmh) : 0.0;
+    // Bypass EMA smoothing in simulation mode (TASK 2)
+    final filteredSpeed = speedKmh > 0 
+        ? (LocationController.instance.isSimulationMode ? speedKmh : _smoother.update(speedKmh))
+        : 0.0;
 
     // Check cameras
     await _checkCameras(lat, lng);
@@ -155,7 +162,8 @@ class WarningEngine {
   Future<void> _checkCameras(double lat, double lng) async {
     final repo = CameraRepository.instance;
     final nearby = repo.queryNearby(lat, lng, cameraRadiusM);
-    appLog('WarningEngine: Checking cameras - found ${nearby.length} nearby');
+    final isSim = LocationController.instance.isSimulationMode;
+    appLog('WarningEngine: Checking cameras - found ${nearby.length} nearby (sim=$isSim)');
 
     for (final camera in nearby) {
       final dist = _distance.as(
@@ -163,6 +171,11 @@ class WarningEngine {
         LatLng(lat, lng),
         LatLng(camera.lat, camera.lng),
       );
+
+      // Log distance for debugging (TASK 3)
+      if (dist <= cameraRadiusM * 2) {  // Log cameras within 300m for debugging
+        appLog('WarningEngine: Camera ${camera.id} at ${dist.toStringAsFixed(1)}m (radius=${cameraRadiusM}m)');
+      }
 
       if (dist <= cameraRadiusM) {
         final inCooldown = await _cooldownDb.isInCooldown(
@@ -181,7 +194,9 @@ class WarningEngine {
             lng: camera.lng,
           );
           _warningManager.emit(warning);
-          appLog('WarningEngine: Camera warning: ${camera.id} at ${dist.toStringAsFixed(1)}m');
+          appLog('WarningEngine: ✅ Camera warning TRIGGERED: ${camera.id} at ${dist.toStringAsFixed(1)}m (sim=$isSim)');
+        } else {
+          appLog('WarningEngine: ⏸️ Camera ${camera.id} in cooldown (sim=$isSim)');
         }
       }
     }

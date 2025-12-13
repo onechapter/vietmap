@@ -170,7 +170,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       _fakeEnabled = isFake;
       _currentLatLng = next;
       _currentSpeedKmh = (pos.speed * 3.6).clamp(0, 300);
-      _filteredSpeedKmh = _smoother.update(_currentSpeedKmh);
+      // Bypass EMA smoothing in simulation mode (TASK 2)
+      _filteredSpeedKmh = isFake 
+          ? _currentSpeedKmh  // Use raw speed in simulation
+          : _smoother.update(_currentSpeedKmh);  // Use smoothed speed in real GPS
       _fakeMarker = isFake
           ? Marker(
               width: 38,
@@ -223,7 +226,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         },
       );
 
-      // Get initial position
+      // Get initial position (TASK 0: Auto follow camera)
       final current = LocationController.instance.currentPosition;
       if (current != null) {
         final initialLatLng = LatLng(current.latitude, current.longitude);
@@ -232,7 +235,12 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           _loading = false;
         });
         _log('Got initial position: $initialLatLng');
-        _moveTo(initialLatLng);
+        // Auto follow camera on startup (TASK 0)
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            _moveTo(initialLatLng, zoom: 16.0);
+          }
+        });
       } else {
         setState(() {
           _loading = false;
@@ -523,11 +531,19 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           final loc = snapshot.data!;
           displayLocation = LatLng(loc.lat, loc.lng);
           
-          // Auto-zoom khi có location mới và đang ở simulation mode
-          if (LocationController.instance.isSimulationMode && _autoFollowFake) {
+          // Auto-follow camera when location updates (TASK 0)
+          // In simulation mode: follow if auto-follow enabled
+          // In real GPS mode: follow on first location or if auto-follow enabled
+          final shouldFollow = LocationController.instance.isSimulationMode 
+              ? _autoFollowFake 
+              : true;  // Always follow in real GPS mode (TASK 0)
+          
+          if (shouldFollow && _mapReady && displayLocation != null) {
+            final locToFollow = displayLocation;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (mounted) {
-                _moveTo(displayLocation!, zoom: 16.0);
+                // Don't force zoom, just move camera smoothly
+                _moveTo(locToFollow);
               }
             });
           }
