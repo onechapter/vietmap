@@ -50,8 +50,18 @@ class RouteSimulatorService extends StateNotifier<LatLng?> {
     _simulator.setRoute(_routePoints!);
     _simulator.setSpeed(_speed);
     
+    appLog('[RouteSimulator] Starting LocationSimulator with ${_routePoints!.length} points, speed=$_speed km/h');
+    
     // Start simulator
     _simulator.start();
+    
+    // Verify simulator is running
+    if (!_simulator.running) {
+      appLog('[RouteSimulator] ⚠️ WARNING: LocationSimulator did not start!');
+      _error = 'Simulator failed to start';
+    } else {
+      appLog('[RouteSimulator] ✅ LocationSimulator started successfully');
+    }
     
     state = _routePoints!.first;
   }

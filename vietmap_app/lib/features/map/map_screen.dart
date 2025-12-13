@@ -105,6 +105,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     });
     // Start warning engine when map is ready
     await _controller.startWarningEngine();
+    
+    // Đảm bảo repositories mới được load cho counter
+    try {
+      await NewCameraRepo.CameraRepository.instance.load();
+      await SpeedLimitRepository.instance.load();
+      await DangerZoneRepository.instance.load();
+      await RailwayRepository.instance.load();
+      appLog('[MapScreen] New repositories loaded for counter');
+    } catch (e) {
+      appLog('[MapScreen] Failed to load new repositories: $e');
+    }
 
     // Lắng nghe vị trí giả lập
     _fakeSub = FakeLocationService.instance.stream.listen((pos) {
@@ -745,11 +756,36 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                                       final lat = loc.lat;
                                       final lng = loc.lng;
                                       
-                                      // Query nearby features với radius phù hợp (500m)
-                                      camCount = NewCameraRepo.CameraRepository.instance.queryNearby(lat, lng, 500).length;
-                                      speedCount = SpeedLimitRepository.instance.queryNearby(lat, lng, 500).length;
-                                      dangerCount = DangerZoneRepository.instance.queryNearby(lat, lng, 500).length;
-                                      railCount = RailwayRepository.instance.queryNearby(lat, lng, 500).length;
+                                      // Đảm bảo repositories đã load trước khi query
+                                      try {
+                                        // Load repositories nếu chưa load (lazy load)
+                                        if (NewCameraRepo.CameraRepository.instance.count == 0) {
+                                          await NewCameraRepo.CameraRepository.instance.load();
+                                        }
+                                        if (SpeedLimitRepository.instance.count == 0) {
+                                          await SpeedLimitRepository.instance.load();
+                                        }
+                                        if (DangerZoneRepository.instance.count == 0) {
+                                          await DangerZoneRepository.instance.load();
+                                        }
+                                        if (RailwayRepository.instance.count == 0) {
+                                          await RailwayRepository.instance.load();
+                                        }
+                                        
+                                        // Query nearby features với radius phù hợp (500m)
+                                        camCount = NewCameraRepo.CameraRepository.instance.queryNearby(lat, lng, 500).length;
+                                        speedCount = SpeedLimitRepository.instance.queryNearby(lat, lng, 500).length;
+                                        dangerCount = DangerZoneRepository.instance.queryNearby(lat, lng, 500).length;
+                                        railCount = RailwayRepository.instance.queryNearby(lat, lng, 500).length;
+                                        
+                                        // Log để debug
+                                        if (camCount == 0 && speedCount == 0 && dangerCount == 0 && railCount == 0) {
+                                          appLog('[MapScreen] Counter: All zeros at lat=$lat, lng=$lng');
+                                          appLog('[MapScreen] Repository counts: cam=${NewCameraRepo.CameraRepository.instance.count}, speed=${SpeedLimitRepository.instance.count}, danger=${DangerZoneRepository.instance.count}, rail=${RailwayRepository.instance.count}');
+                                        }
+                                      } catch (e) {
+                                        appLog('[MapScreen] Counter query error: $e');
+                                      }
                                     }
                                     
                                     return Card(

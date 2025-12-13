@@ -69,17 +69,20 @@ class LocationSimulator {
   bool get running => _running;
 
   void _tick() {
-    if (!_running || _route.isEmpty) return;
+    if (!_running || _route.isEmpty) {
+      appLog('[LocationSimulator] ⚠️ Tick skipped: running=$_running, route empty=${_route.isEmpty}');
+      return;
+    }
 
     if (_index >= _route.length - 1) {
       // Đã đến điểm cuối
+      appLog('[LocationSimulator] ✅ Reached destination at index $_index/${_route.length}');
       LocationController.instance.updateLocation(
         latitude: _route[_index].latitude,
         longitude: _route[_index].longitude,
         speed: _speedKmh / 3.6, // m/s
       );
       stop();
-      appLog('LocationSimulator: Reached destination');
       return;
     }
 
@@ -95,12 +98,12 @@ class LocationSimulator {
     if (moveDist >= dist) {
       // Đã đi hết segment này, chuyển sang điểm tiếp theo
       _index++;
+      appLog('[LocationSimulator] ✅ Moved to point $_index/${_route.length} (jumped segment, dist=${dist.toStringAsFixed(1)}m)');
       LocationController.instance.updateLocation(
         latitude: b.latitude,
         longitude: b.longitude,
         speed: _speedKmh / 3.6, // m/s
       );
-      appLog('LocationSimulator: Moved to point $_index/${_route.length}');
       return;
     }
 
@@ -109,13 +112,13 @@ class LocationSimulator {
     final newLat = a.latitude + (b.latitude - a.latitude) * ratio;
     final newLng = a.longitude + (b.longitude - a.longitude) * ratio;
 
+    appLog('[LocationSimulator] ✅ Tick #$_index: pos=$newLat,$newLng speed=${_speedKmh.toStringAsFixed(1)} km/h (dist=${dist.toStringAsFixed(1)}m, move=${moveDist.toStringAsFixed(1)}m)');
+    
     LocationController.instance.updateLocation(
       latitude: newLat,
       longitude: newLng,
       speed: _speedKmh / 3.6, // m/s
     );
-    
-    appLog('LocationSimulator: Tick - pos=$newLat,$newLng speed=${_speedKmh.toStringAsFixed(1)} km/h');
   }
 }
 
