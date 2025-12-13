@@ -756,32 +756,33 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                                       final lat = loc.lat;
                                       final lng = loc.lng;
                                       
-                                      // Đảm bảo repositories đã load trước khi query
+                                      // Query nearby features với radius phù hợp (500m)
+                                      // Repositories đã được load trong _initController()
                                       try {
-                                        // Load repositories nếu chưa load (lazy load)
-                                        if (NewCameraRepo.CameraRepository.instance.count == 0) {
-                                          await NewCameraRepo.CameraRepository.instance.load();
-                                        }
-                                        if (SpeedLimitRepository.instance.count == 0) {
-                                          await SpeedLimitRepository.instance.load();
-                                        }
-                                        if (DangerZoneRepository.instance.count == 0) {
-                                          await DangerZoneRepository.instance.load();
-                                        }
-                                        if (RailwayRepository.instance.count == 0) {
-                                          await RailwayRepository.instance.load();
-                                        }
-                                        
-                                        // Query nearby features với radius phù hợp (500m)
                                         camCount = NewCameraRepo.CameraRepository.instance.queryNearby(lat, lng, 500).length;
                                         speedCount = SpeedLimitRepository.instance.queryNearby(lat, lng, 500).length;
                                         dangerCount = DangerZoneRepository.instance.queryNearby(lat, lng, 500).length;
                                         railCount = RailwayRepository.instance.queryNearby(lat, lng, 500).length;
                                         
-                                        // Log để debug
+                                        // Log để debug nếu tất cả = 0
                                         if (camCount == 0 && speedCount == 0 && dangerCount == 0 && railCount == 0) {
+                                          // Log repository counts để debug (không dùng await trong builder)
+                                          final camRepoCount = NewCameraRepo.CameraRepository.instance.count;
+                                          final speedRepoCount = SpeedLimitRepository.instance.count;
+                                          final dangerRepoCount = DangerZoneRepository.instance.count;
+                                          final railRepoCount = RailwayRepository.instance.count;
+                                          
                                           appLog('[MapScreen] Counter: All zeros at lat=$lat, lng=$lng');
-                                          appLog('[MapScreen] Repository counts: cam=${NewCameraRepo.CameraRepository.instance.count}, speed=${SpeedLimitRepository.instance.count}, danger=${DangerZoneRepository.instance.count}, rail=${RailwayRepository.instance.count}');
+                                          appLog('[MapScreen] Repository counts: cam=$camRepoCount, speed=$speedRepoCount, danger=$dangerRepoCount, rail=$railRepoCount');
+                                          
+                                          // Nếu repositories chưa load, trigger load (async, không block UI)
+                                          if (camRepoCount == 0 || speedRepoCount == 0 || dangerRepoCount == 0 || railRepoCount == 0) {
+                                            // Load repositories async (không await trong builder)
+                                            NewCameraRepo.CameraRepository.instance.load();
+                                            SpeedLimitRepository.instance.load();
+                                            DangerZoneRepository.instance.load();
+                                            RailwayRepository.instance.load();
+                                          }
                                         }
                                       } catch (e) {
                                         appLog('[MapScreen] Counter query error: $e');
