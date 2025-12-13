@@ -271,6 +271,14 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
                 if (!_isSimulating) {
                   await _fakeLocation.startSimulating(lat, lng);
                   setState(() => _isSimulating = true);
+                  
+                  // Tự động ẩn màn hình debug khi bắt đầu mô phỏng thành công
+                  if (mounted) {
+                    await Future.delayed(const Duration(milliseconds: 300));
+                    if (mounted) {
+                      Navigator.pop(context);
+                    }
+                  }
                 } else {
                   _fakeLocation.stopSimulating();
                   setState(() => _isSimulating = false);
@@ -399,6 +407,14 @@ class _DebugScreenState extends ConsumerState<DebugScreen> {
                             _routeLoading = false;
                             _routeError = null;
                           });
+                          
+                          // Tự động ẩn màn hình debug khi bắt đầu mô phỏng thành công
+                          if (mounted) {
+                            await Future.delayed(const Duration(milliseconds: 300));
+                            if (mounted) {
+                              Navigator.pop(context);
+                            }
+                          }
                         }
                       } catch (e) {
                         setState(() {
